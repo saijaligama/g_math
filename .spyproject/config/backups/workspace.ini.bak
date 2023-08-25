@@ -1,0 +1,10 @@
+[workspace]
+restore_data_on_startup = True
+save_data_on_exit = True
+save_history = True
+save_non_project_files = False
+
+[main]
+version = 0.2.0
+recent_files = ['app.py', 'portal\\views.py', 'portal\\__init__.py', 'config\\development.py', 'portal\\application\\__init__.py', 'portal\\helpers.py', 'portal\\templates\\home.html', 'portal\\seeds\\__init__.py', 'portal\\static\\css\\home_backup.css', 'portal\\templates\\integer.html', 'portal\\templates\\algebra.html', 'portal\\templates\\complex_numbers.html', 'portal\\templates\\calculus.html', 'portal\\templates\\sequences.html']
+
