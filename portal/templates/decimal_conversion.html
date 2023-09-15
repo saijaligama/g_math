@@ -65,8 +65,8 @@
                    
                 </TR>
                 <TR ALIGN=CENTER>
-                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID=a1_inputval12 data-my-input></TD>
-                   <td><INPUT TYPE=TEXT NAME=arith_or_geo_input ID=arith_or_geo_input style="padding: 12px;width: 380px;"></td>
+                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID="decimal" data-my-input></TD>
+                   <td><INPUT TYPE=TEXT NAME=arith_or_geo_input ID="dec_to_word_answer" style="padding: 12px;width: 380px;"></td>
 
                 </TR>
 <!--                <tr>-->
@@ -85,26 +85,51 @@
           <form>
                 <TR>
                     <TD>
-                        <INPUT TYPE="button" class="widebutton" value="Convert">
+                        <INPUT TYPE="button" class="widebutton" value="Convert" onclick="convert_decimal()">
                     </TD>
-                    <TD>
-                        <INPUT TYPE="button" class="widebutton" value="Show Digits" style="width: 120px;margin-right: 55px;margin-left: 20px;">
-                        
-                        <INPUT TYPE="button" class="widebutton" value="Round To">
-                    </TD>
-                   
+<!--                    <TD>-->
+<!--                        <INPUT TYPE="button" class="widebutton" value="Show Digits" style="width: 120px;margin-right: 55px;margin-left: 20px;" onclick="show_decimals()">-->
+<!--                        -->
+<!--                        <INPUT TYPE ="button" class="widebutton" value="Round To" onclick="round_to()">-->
+<!--                    </TD>-->
+<!--                   -->
 
-                </TR>
-                <tr>
-                    <td> <br> </td>
-                    <td><input type="text"> <input type="text"></td>
-                    
-                </tr>
+<!--                </TR>-->
+<!--                <tr>-->
+<!--                    <td> <br> </td>-->
+<!--                    <td><input type="text" id="show_digits_answer">-->
+<!--                        <input type="text" id="round_to_answer"></td>-->
+<!--                    -->
+<!--                </tr>-->
 
-               
-                <tr>
-                    <td> <br> </td>
-                </tr>
+<!--               -->
+<!--                <tr>-->
+<!--                    <td> <br> </td>-->
+<!--                </tr>-->
+                    <TR>
+                <TD>
+                    <INPUT TYPE="button" class="widebutton" value="Round To" onclick="round_to()">
+                </TD>
+                <TD>
+                    <INPUT TYPE="text" id="round_to_answer">
+                </TD>
+            </TR>
+            <tr>
+                <td> <br> </td>
+            </tr>
+
+            <!-- 'Show Digits' Button and TextBox -->
+            <TR>
+                <TD>
+                    <INPUT TYPE="button" class="widebutton" value="Show Digits" style="width: 120px;" onclick="show_decimals()">
+                </TD>
+                <TD>
+                    <INPUT TYPE="text" id="show_digits_answer" style="width: 500px;"> <!-- I've increased the width here -->
+                </TD>
+            </TR>
+            <tr>
+                <td> <br> </td>
+            </tr>
 
             </TABLE>
         </FORM>
@@ -115,110 +140,19 @@
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script>
-        function Get_Data() {
-            document.getElementById("a1_val12").value = "";
-            document.getElementById("d_or_r_val12").value = "";
-            document.getElementById("a_n_val13").value = "";
-            document.getElementById("s_n_val14").value = "";
-            document.getElementById("type_of_sequence").innerHTML = "";
-            var ARITH_OR_GEO_INPUT = document.getElementById("arith_or_geo_input").value
-            let myArray2 =[];
+    function convert_decimal(){
+    dec_to_convert = document.getElementById("decimal").value;
 
-            if (ARITH_OR_GEO_INPUT == "") {
-                document.getElementById("error_message_alert").innerHTML = "Please enter the sequence"
-                document.getElementById("error_message_alert").className = '';
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
+    dec_dict = {'operation':'dec_to_word','decimal_to_convert':dec_to_convert}
 
-            if(ARITH_OR_GEO_INPUT.includes("..."))
-            {
-                document.getElementById("error_message_alert").className = 'required_';
-                myArray2=ARITH_OR_GEO_INPUT.split("...");
-                console.log(myArray2)
-                if (isNaN(parseInt(myArray2[myArray2.length - 1]))){
-                    document.getElementById("error_message_alert").className = '';
-                    document.getElementById("error_message_alert").innerHTML = "Syntax Error"
-                    return false;
-                }
-                
-            }
-            else {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "Syntax Error"
-                return false;
-            }
-
-            const last_value = myArray2[myArray2.length - 1];
-            const arith_or_geo_input_s_n = last_value;
-            myArray2.pop();
-
-            const myArray=myArray2[0].split(",")
-
-            if (arith_or_geo_input_s_n == "") {
-                document.getElementById("error_message_alert").innerHTML = "Please enter the (n)"
-                document.getElementById("error_message_alert").className = '';
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-            if ( parseInt(arith_or_geo_input_s_n)) {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-            else {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "The (n)th Value Must be integer"
-                return false;
-
-            }
-
-            const resultArray = myArray.map(value => {
-                if (parseInt(value)) {
-                    return parseInt(value);
-                }
-                else if (parseFloat(value)) {
-                    return parseFloat(value);
-                }
-                else {
-                    return value;
-                }
-            });
-            const containsString = resultArray.some(element => typeof element === "string");
-            if (containsString) {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "Syntax Error"
-                return false;
-
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-
-            if (myArray.length < 3) {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "The Sequence has less than 3 elements."
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-            console.log(myArray)
-            let details_ = { "arith_or_geo_input": myArray, "type": 'a_or_g_output', "a_n_term": parseInt(arith_or_geo_input_s_n) }
-            $.ajax({
-                url: '/uncg_math/sequences',
-                data: JSON.stringify(details_),
+     $.ajax({
+                url: '/uncg_math/decimal_conversion',
+                data: JSON.stringify(dec_dict),
                 type: 'POST',
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("d_or_r_val12").value = data2['common_difference'];
-                    document.getElementById("a_n_val13").value = data2['nth_number'];
-                    document.getElementById("s_n_val14").value = data2['sum_of_nth_number'];
-                    document.getElementById("type_of_sequence").innerHTML = data2['type'];
-                    document.getElementById("a1_val12").value = data2['first_term'];
+                    document.getElementById("dec_to_word_answer").value = data2["result"];
                     return true;
                 },
                 error: function (data2) {
@@ -226,118 +160,45 @@
                     return false;
                 }
             });
-        }
-    </script>
-
-<!--    <script>-->
-<!--        function Get_Data() {-->
-<!--            document.getElementById("a1_val12").value = "";-->
-<!--            document.getElementById("d_or_r_val12").value = "";-->
-<!--            document.getElementById("a_n_val13").value = "";-->
-<!--            document.getElementById("s_n_val14").value = "";-->
-<!--            document.getElementById("type_of_sequence").innerHTML = "";-->
-<!--            var ARITH_OR_GEO_INPUT = document.getElementById("arith_or_geo_input").value-->
-<!--            -->
-<!--            if (ARITH_OR_GEO_INPUT == "") {-->
-<!--                document.getElementById("error_message_alert").innerHTML = "Please enter the sequence"-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                return false;-->
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
-<!--            }-->
-<!--            -->
-<!--            if(ARITH_OR_GEO_INPUT.includes("..."))-->
-<!--            {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
-<!--                const myArray2=ARITH_OR_GEO_INPUT.split("...");-->
-<!--                console.log(myArray2)-->
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                document.getElementById("error_message_alert").innerHTML = "Invalid sequence, Please check sequence format"-->
-<!--                return false;-->
-<!--            }-->
-
-<!--            const myArray = ARITH_OR_GEO_INPUT.split(",");-->
 
 
-<!--            const last_value = myArray2[myArray2.length - 1];-->
-<!--&lt;!&ndash;            const lastsecondValue = myArray[myArray.length - 2];&ndash;&gt;-->
-<!--            const arith_or_geo_input_s_n = last_value;-->
-<!--            myArray2.pop();-->
-<!--            -->
-<!--            if (arith_or_geo_input_s_n == "") {-->
-<!--                document.getElementById("error_message_alert").innerHTML = "Please enter the (n)"-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                return false;-->
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
-<!--            }-->
-<!--            if ( parseInt(arith_or_geo_input_s_n)) {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                document.getElementById("error_message_alert").innerHTML = "The (n)th Value Must be integer"-->
-<!--                return false;-->
+    }
 
-<!--            }-->
-<!--            if (typeof lastsecondValue === "string" && lastsecondValue.includes(".")) {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
+    function round_to(){
+    dec_to_convert = document.getElementById("decimal").value;
 
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                document.getElementById("error_message_alert").innerHTML = "Invalid sequence"-->
-<!--                return false;-->
-<!--            }-->
-<!--            myArray.splice(myArray.length - 1, 1);-->
-<!--            const resultArray = myArray.map(value => {-->
-<!--                if (parseInt(value)) {-->
-<!--                    return parseInt(value);-->
-<!--                }-->
-<!--                else if (parseFloat(value)) {-->
-<!--                    return parseFloat(value);-->
-<!--                }-->
-<!--                else {-->
-<!--                    return value;-->
-<!--                }-->
-<!--            });-->
-<!--            const containsString = resultArray.some(element => typeof element === "string");-->
-<!--            if (containsString) {-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                document.getElementById("error_message_alert").innerHTML = "All values must be integers"-->
-<!--                return false;-->
+    dec_dict = {'operation':'round_to','decimal_to_convert':dec_to_convert}
 
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
-<!--            }-->
+     $.ajax({
+                url: '/uncg_math/decimal_conversion',
+                data: JSON.stringify(dec_dict),
+                type: 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data2) {
+                    document.getElementById("round_to_answer").value = data2["result"];
+                    return true;
+                },
+                error: function (data2) {
+                    console.log(data2);
+                    return false;
+                }
+            });
 
-<!--            if (myArray.length < 3) {-->
-<!--                document.getElementById("error_message_alert").className = '';-->
-<!--                document.getElementById("error_message_alert").innerHTML = "The Sequence has less than 3 elements."-->
-<!--                return false;-->
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert").className = 'required_';-->
-<!--            }-->
-<!--            console.log(myArray)-->
-<!--            let details_ = { "arith_or_geo_input": myArray, "type": 'a_or_g_output', "a_n_term": parseInt(arith_or_geo_input_s_n) }-->
-<!--            $.ajax({-->
-<!--                url: '/uncg_math/sequences',-->
-<!--                data: JSON.stringify(details_),-->
+    }
+<!--    function show_decimals(){-->
+<!--    dec_to_convert = document.getElementById("decimal").value;-->
+
+<!--    dec_dict = {'operation':'show_decimals','decimal_to_convert':dec_to_convert}-->
+
+<!--     $.ajax({-->
+<!--                url: '/uncg_math/decimal_conversion',-->
+<!--                data: JSON.stringify(dec_dict),-->
 <!--                type: 'POST',-->
 <!--                contentType: "application/json",-->
 <!--                dataType: 'json',-->
 <!--                success: function (data2) {-->
-<!--                    document.getElementById("d_or_r_val12").value = data2['common_difference'];-->
-<!--                    document.getElementById("a_n_val13").value = data2['nth_number'];-->
-<!--                    document.getElementById("s_n_val14").value = data2['sum_of_nth_number'];-->
-<!--                    document.getElementById("type_of_sequence").innerHTML = data2['type'];-->
-<!--                    document.getElementById("a1_val12").value = data2['first_term'];-->
+<!--                    document.getElementById("show_digits_answer").value = data2["result"];-->
 <!--                    return true;-->
 <!--                },-->
 <!--                error: function (data2) {-->
@@ -345,163 +206,46 @@
 <!--                    return false;-->
 <!--                }-->
 <!--            });-->
-<!--        }-->
-<!--    </script>-->
 
-<script>
-        function Generate_sequence(type_) {
-<!--            document.getElementById("a1_inputval12_Results").value = "";-->
-<!--            document.getElementById("n_inputval12_Results").value = "";-->
-<!--            document.getElementById("d_or_r_inputval12_Results").value = "";-->
-<!--            document.getElementById("a_n_inputval12_Results").value = "";-->
-<!--            document.getElementById("S_n_inputval12_Results").value = "";-->
-            document.getElementById("error_message_alert2").innerHTML = "------------"
+<!--    }-->
 
-            var a1 = document.getElementById("a1_inputval12").value
-            var n = document.getElementById("n_inputval12").value
-            var d_or_r = document.getElementById("d_or_r_inputval12").value
-            var a_n_ = document.getElementById("a_n_inputval12").value
-            var s_n_=document.getElementById("S_n_inputval12").value
-            let myList = [a1,n,d_or_r,a_n_];
-            let filteredList = myList.filter(function(value) {
-            return value !== "";
-            });
-            if (s_n_ == "") {
-                s_n_=n;
-            }
-            if (a1 == "" && n== "" && d_or_r== "" && a_n_ == "") {
-                document.getElementById("error_message_alert2").className = 'contact__label';
-                document.getElementById("error_message_alert2").innerHTML = "Fill any 3 of first 4 boxes"
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            if (filteredList.length < 3)
-            {
-               document.getElementById("error_message_alert2").className = 'contact__label';
-                document.getElementById("error_message_alert2").innerHTML = "Fill any 3 of first 4 boxes"
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
+function show_decimals() {
+    let dec_to_convert = document.getElementById("decimal").value;
+    let dec_dict = {
+        'operation': 'show_decimals',
+        'decimal_to_convert': dec_to_convert
+    }
 
-            if ( a1!= "" && parseFloat(a1)) {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else if ( a1== "") {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else {
-                document.getElementById("error_message_alert2").className = 'contact__label';
-                document.getElementById("error_message_alert2").innerHTML = "The a1 Value Must be integer"
-                return false;
-
-            }
-            if ( n!= "" && parseInt(n)) {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else if ( n== "") {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else {
-                document.getElementById("error_message_alert2").className = 'contact__label';
-                document.getElementById("error_message_alert2").innerHTML = "The n Value Must be integer"
-                return false;
-
-            }
-            if ( d_or_r!= "" && parseFloat(d_or_r)) {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else if ( d_or_r== "") {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else {
-                document.getElementById("error_message_alert2").className = 'contact__label';
-                document.getElementById("error_message_alert2").innerHTML = "The d or r Value Must be integer"
-                return false;
-
-            }
-            if ( a_n_!= "" && parseFloat(a_n_)) {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else if ( a_n_== "") {
-                document.getElementById("error_message_alert2").className = 'required_12';
-            }
-            else {
-                document.getElementById("error_message_alert2").className = 'contact__label';
-                document.getElementById("error_message_alert2").innerHTML = "The A(n) Value Must be integer"
-                return false;
-
-            }
-<!--             if ( s_n_!= "" && parseFloat(s_n_)) {-->
-<!--                document.getElementById("error_message_alert2").className = 'required_12';-->
-<!--            }-->
-<!--            else {-->
-<!--                document.getElementById("error_message_alert2").className = 'contact__label';-->
-<!--                document.getElementById("error_message_alert2").innerHTML = "The S(n) Value Must be integer and not null"-->
-<!--                return false;-->
-
-<!--            }-->
-            let details_ = { "a1":parseFloat(a1),"n": parseInt(n),"d_or_r": parseFloat(d_or_r),"a_n_": parseFloat(a_n_),"s_n_": parseFloat(s_n_),"type": type_ }
-            $.ajax({
-                url: '/uncg_math/sequences',
-                data: JSON.stringify(details_),
-                type: 'POST',
-                contentType: "application/json",
-                dataType: 'json',
-                success: function (data2) {
-<!--                    document.getElementById("a1_inputval12").value = data2['first_term'];-->
-<!--                    document.getElementById("n_inputval12").value = data2['position'];-->
-<!--                    document.getElementById("d_or_r_inputval12").value = data2['common_difference'];-->
-<!--                    document.getElementById("a_n_inputval12").value =data2['nth_number'];-->
-<!--                    document.getElementById("S_n_inputval12").value = data2['sum_of_nth_number'];-->
-
-
-
-                    document.getElementById("a1_inputval12").value = data2['first_term'];
-                    document.getElementById("n_inputval12").value = data2['position'];
-                    document.getElementById("d_or_r_inputval12").value = data2['common_difference'];
-                    document.getElementById("a_n_inputval12").value =data2['nth_number'];
-                    document.getElementById("S_n_inputval12").value = data2['sum_of_nth_number'];
-
-<!--                    document.getElementById("a1_inputval12_Results").value = data2['first_term'];-->
-<!--                    document.getElementById("n_inputval12_Results").value = data2['position'];-->
-<!--                    document.getElementById("d_or_r_inputval12_Results").value = data2['common_difference'];-->
-<!--                    document.getElementById("a_n_inputval12_Results").value = data2['nth_number'];-->
-<!--                    document.getElementById("S_n_inputval12_Results").value = data2['sum_of_nth_number'];-->
-                    return true;
-                },
-                error: function (data2) {
-                    console.log(data2);
-                    return false;
-                }
-            });
+    $.ajax({
+        url: '/uncg_math/decimal_conversion',
+        data: JSON.stringify(dec_dict),
+        type: 'POST',
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data2) {
+            let formattedResult = formatResult(data2["result"]);
+            document.getElementById("show_digits_answer").value = formattedResult;
+            return true;
+        },
+        error: function (data2) {
+            console.log(data2);
+            return false;
         }
-    </script>
-<script>
-function clearTextboxesIfThreeFilled() {
-  const inputs = document.querySelectorAll('[data-my-input]');
-  let filledCount = 0;
-  for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].value.trim() !== '') {
-      filledCount++;
-    }
-  }
-  if (filledCount >= 3) {
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].value = '';
-    }
-  }
+    });
 }
 
-const inputs = document.querySelectorAll('[data-my-input]');
-for (let i = 0; i < inputs.length; i++) {
-  inputs[i].addEventListener('focus', clearTextboxesIfThreeFilled);
+function formatResult(resultDict) {
+    let output = [];
+    for (let [key, value] of Object.entries(resultDict)) {
+        output.push(`${key} : ${value}`);
+    }
+    return output.join(", ");
 }
+
+
+
+
 </script>
 
 </body>
-
-</html>
+       </html>

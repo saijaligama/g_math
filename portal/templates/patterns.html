@@ -46,184 +46,55 @@
 <!--            </ul>-->
         </div>
 
-
-   
-
-        <h2> <a id="Get_Arithmetic_Geometric">Patterns</a></h2>
-
-
+<h2>Patterns</h2>
         <FORM>
             <TABLE border=0 width=100% bgcolor=moccasin>
-                <tr>
-                    <td> <br> </td>
-                </tr>
-                
-
-                <TR>
-                    <TD ALIGN=CENTER>Enter Pattern:</TD>
-                   
-                   
-                   
-                </TR>
-                <TR ALIGN=CENTER>
-                    <TD><INPUT CLASS="widebutton" TYPE=TEXT style="width: 200px;"></TD>
-                     <TD ALIGN=CENTER>
-                        <INPUT TYPE="button" class="widebutton" value="Calculate">
-                    </TD>
-                
-                </TR>
-                <TR ALIGN=CENTER>
-                    <TD>Result:</TD>
-                     
-                  
-                </TR>
-                
-                
-                <TR ALIGN=CENTER>
-                    <TD><INPUT CLASS="widebutton" TYPE=TEXT style="width: 200px;"></TD>
-                     
-                  
-                </TR>
-                
-<!--                <tr>-->
-<!--                    <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>-->
-<!--                    <span id="">Results :</span>-->
-<!--                    </TD>-->
-<!--                </tr>-->
-<!--                <TR ALIGN=CENTER>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=a1_inputval12 ID=a1_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=n_inputval12 ID=n_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=d_or_r_inputval12 ID=d_or_r_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=a_n_inputval12 ID=a_n_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=S_n_inputval12 ID=S_n_inputval12_Results disabled></TD>-->
-<!--                </TR>-->
-        
-               
-                <tr>
-                    <td> <br> </td>
-                </tr>
-
-            </TABLE>
-        </FORM>
-
+        <tr>
+            <td> <br> </td>
+        </tr>
+        <TR>
+            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
+                <span>Sequence:</span><br>
+                <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <span>n</span>
+                <INPUT TYPE=TEXT NAME="limit_point" ID="differentiation_point" style="padding: 12px;width: 10px;">
+                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_pattern()">
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN=CENTER>Result :</TD>
+            <TD><span id="differentiation_result" style="font-size: small;">-------------------</span></TD>
+        </tr>
+    </TABLE>
+</FORM>
 
 
     </div>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script>
-        function Get_Data() {
-            document.getElementById("a1_val12").value = "";
-            document.getElementById("d_or_r_val12").value = "";
-            document.getElementById("a_n_val13").value = "";
-            document.getElementById("s_n_val14").value = "";
-            document.getElementById("type_of_sequence").innerHTML = "";
-            var ARITH_OR_GEO_INPUT = document.getElementById("arith_or_geo_input").value
-            let myArray2 =[];
-
-            if (ARITH_OR_GEO_INPUT == "") {
-                document.getElementById("error_message_alert").innerHTML = "Please enter the sequence"
-                document.getElementById("error_message_alert").className = '';
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-
-            if(ARITH_OR_GEO_INPUT.includes("..."))
-            {
-                document.getElementById("error_message_alert").className = 'required_';
-                myArray2=ARITH_OR_GEO_INPUT.split("...");
-                console.log(myArray2)
-                if (isNaN(parseInt(myArray2[myArray2.length - 1]))){
-                    document.getElementById("error_message_alert").className = '';
-                    document.getElementById("error_message_alert").innerHTML = "Syntax Error"
-                    return false;
-                }
-                
-            }
-            else {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "Syntax Error"
-                return false;
-            }
-
-            const last_value = myArray2[myArray2.length - 1];
-            const arith_or_geo_input_s_n = last_value;
-            myArray2.pop();
-
-            const myArray=myArray2[0].split(",")
-
-            if (arith_or_geo_input_s_n == "") {
-                document.getElementById("error_message_alert").innerHTML = "Please enter the (n)"
-                document.getElementById("error_message_alert").className = '';
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-            if ( parseInt(arith_or_geo_input_s_n)) {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-            else {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "The (n)th Value Must be integer"
-                return false;
-
-            }
-
-            const resultArray = myArray.map(value => {
-                if (parseInt(value)) {
-                    return parseInt(value);
-                }
-                else if (parseFloat(value)) {
-                    return parseFloat(value);
-                }
-                else {
-                    return value;
-                }
-            });
-            const containsString = resultArray.some(element => typeof element === "string");
-            if (containsString) {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "Syntax Error"
-                return false;
-
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-
-            if (myArray.length < 3) {
-                document.getElementById("error_message_alert").className = '';
-                document.getElementById("error_message_alert").innerHTML = "The Sequence has less than 3 elements."
-                return false;
-            }
-            else {
-                document.getElementById("error_message_alert").className = 'required_';
-            }
-            console.log(myArray)
-            let details_ = { "arith_or_geo_input": myArray, "type": 'a_or_g_output', "a_n_term": parseInt(arith_or_geo_input_s_n) }
-            $.ajax({
-                url: '/uncg_math/sequences',
-                data: JSON.stringify(details_),
+      function get_pattern(){
+        eqn = document.getElementById("differentiation_input").value
+        n = document.getElementById("differentiation_point").value
+        data_dict = {'eqn':eqn,'n':n}
+        $.ajax({
+                url: '/uncg_math/patterns',
+                data: JSON.stringify(data_dict),
                 type: 'POST',
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("d_or_r_val12").value = data2['common_difference'];
-                    document.getElementById("a_n_val13").value = data2['nth_number'];
-                    document.getElementById("s_n_val14").value = data2['sum_of_nth_number'];
-                    document.getElementById("type_of_sequence").innerHTML = data2['type'];
-                    document.getElementById("a1_val12").value = data2['first_term'];
-                    return true;
+                    document.getElementById("differentiation_result").innerText = data2['result'];
+                   return true;
                 },
                 error: function (data2) {
                     console.log(data2);
                     return false;
                 }
             });
-        }
+
+
+    }
     </script>
 
 <!--    <script>-->

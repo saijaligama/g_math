@@ -4,7 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from portal.application.sequence import sequence_type, generat_arithmetic_sequence, generat_geometric_sequence
 from portal.application.matrix_operations import matrix_arithmetic, matrix_arithmetic_operations, get_matrix, \
     get_ones_zeros_eye,get_transpose_inv_det,get_Diagonal_Trace_Size,get_inverse
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+# from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 import numpy as np
 from portal.application.complex_numbers import evaluate_complex_expression
 from portal.application.equations_inequalities import evaluate_expression,find_variables,calculate_logarithm,quad_equation_solution
@@ -14,6 +14,10 @@ from decimal import Decimal
 #from PyPDF2 import PdfReader
 from fraction import Fraction
 import re
+
+# from scripts.utils.fraction_conversion_util import repeating_decimal
+from portal.scripts.utils.fraction_conversion_util import repeating_decimal
+from portal.scripts.utils.decimal_word_conversion_util import number_to_words, round_to_nearest_10th, extract_places
 
 bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./templates", static_folder="./static")
 
@@ -37,51 +41,129 @@ def home():
 #def home():
 #    if request.method == "GET":
 #        return render_template("home.html")
+from sympy import symbols, expand, sympify
 
 
-def repeating_decimal(numerator, denominator):
-    # Store the integer part of the fraction
-    integer_part = numerator // denominator
-    
-    # Initialize variables to track the decimal portion and remainders
-    decimal_part = []
-    remainders = []
+def simplify_step_by_step(equations, variable):
+    var = symbols(variable)
 
-    numerator %= denominator
+    if not isinstance(equations, list):
+        equations = [equations]
 
-    # Perform the long division
-    while numerator and numerator not in remainders:
-        remainders.append(numerator)
-        numerator *= 10
-        quotient, remainder = divmod(numerator, denominator)
-        decimal_part.append(str(quotient))
-        numerator = remainder
-    
-    # If there's a repeating sequence
-    if numerator:
-        index_of_repeating_sequence = remainders.index(numerator)
-        non_repeating = ''.join(decimal_part[:index_of_repeating_sequence])
-        repeating = ''.join(decimal_part[index_of_repeating_sequence:])
-        return f"{integer_part}.{non_repeating}({repeating})"
-    else:
-        return f"{integer_part}." + ''.join(decimal_part)
+    for eq_index, equation in enumerate(equations, 1):
+        # Convert string equation to sympy expression
+        equation = sympify(equation)
+
+        print(f"\n--- Simplifying equation {eq_index} ---")
+
+        args = equation.args
+
+        if not args:
+            print(f"Equation is a single term: {equation}")
+            continue
+
+        print("Step 1: Identify the terms.")
+        for i, term in enumerate(args, 1):
+            print(f"Term {i}: {term}")
+
+        print("\nStep 2: Combine the terms.")
+        combined_equation = expand(equation)
+        print(f"Combined result: {combined_equation}")
+
+        print("\nStep 3: Combine like terms (if any).")
+        simplified_equation = expand(combined_equation)
+    return f"Simplified equation: {simplified_equation}"
+
+
+@bp.route('/polynomials', methods=["GET", "POST"])
+def polynomial_simplification():
+    if request.method == 'GET':
+        return render_template('polynomial.html')
+    elif request.method == 'POST':
+        data = request.json
+        result = simplify_step_by_step(data['eqn'],data['variable'])
+        return jsonify({'result': result})
+
+
 
 @bp.route('/decimal_conversion', methods=["GET", "POST"])
 def decimal_conversion():
     if request.method == "GET":
         return render_template("decimal_conversion.html")
+    if request.method == "POST":
+        data = request.json
+        result=""
+        if data['operation'] == 'dec_to_word':
+            result = number_to_words(data['decimal_to_convert'])
+        elif data['operation'] == 'round_to':
+            result = round_to_nearest_10th(float(data['decimal_to_convert']))
+        else:
+            result = extract_places((float(data['decimal_to_convert'])))
+        return jsonify({'result': result})
 
 
 @bp.route('/fraction_conversion', methods=["GET", "POST"])
 def fraction_conversion():
     if request.method == "GET":
         return render_template("fraction_conversion.html")
-    
+
+    if request.method == "POST":
+        data = request.json
+        num = int(data['fraction'].split("/")[0])
+        denom = int(data['fraction'].split("/")[1])
+        result = repeating_decimal(num, denom)
+        return jsonify({'result': result})
+
+def identify_and_generate(sequence_str, n):
+    sequence = [int(x.strip()) for x in sequence_str.split(",")]
+    print("Debug: Converted sequence:", sequence)
+    n = int(n)
+
+    diffs = [sequence[i] - sequence[i-1] for i in range(1, len(sequence))]
+    ratios = [sequence[i] / sequence[i-1] for i in range(1, len(sequence)) if sequence[i-1] != 0]
+    print("Debug: diffs[0] type:", type(diffs[0]), "Value:", diffs[0])
+    print("Debug: n type:", type(n), "Value:", n)
+
+    # Check if it's an arithmetic progression
+    if len(set(diffs)) == 1:
+        next_terms = [sequence[-1] + (i+1)*diffs[0] for i in range(n)]
+        return f"Arithmetic progression detected with a common difference of {diffs[0]}. Next {n} terms: {next_terms}"
+
+    # Check if it's a geometric progression
+    elif len(set(ratios)) == 1:
+        next_terms = [sequence[-1] * (ratios[0]**(i+1)) for i in range(n)]
+        return f"Geometric progression detected with a common ratio of {ratios[0]}. Next {n} terms: {next_terms}"
+
+    # Try to detect recurring pattern in diffs
+    pattern_length = None
+    for length in range(1, len(diffs)):
+        if diffs[:length] == diffs[length:length*2]:
+            pattern_length = length
+            break
+
+    # If pattern detected, generate next terms
+    if pattern_length:
+        next_terms = []
+        last_term = sequence[-1]
+        for i in range(n):
+            diff = diffs[i % pattern_length]
+            last_term += diff
+            next_terms.append(last_term)
+        return f"Pattern detected with recurring differences: {diffs[:pattern_length]}. Next {n} terms: {next_terms}"
+    else:
+        return "Pattern not recognized."
+
+
     
 @bp.route('/patterns', methods=["GET", "POST"])
 def patterns():
     if request.method == "GET":
         return render_template("patterns.html")
+    elif request.method == 'POST':
+        data = request.json
+        result = identify_and_generate(data['eqn'],data['n'])
+        return jsonify({'result': result})
+
 
 
 @bp.route('/arithmetic_expressions', methods=["GET", "POST"])
