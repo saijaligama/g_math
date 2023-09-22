@@ -1,5 +1,5 @@
 import inflect
-
+from word2number import w2n
 
 def number_to_words(num):
     p = inflect.engine()
@@ -42,6 +42,13 @@ def extract_places(num):
 
     return places_dict
 
+
+def text_to_decimal(text):
+    try:
+        decimal_value = w2n.word_to_num(text)
+        return decimal_value
+    except ValueError:
+        return None
 # print(extract_places(21.31))         # Output: {'1st_place': 1, '10th_place': 2, 'decimal_place': 31}
 # print(extract_places(1.1))           # Output: {'1st_place': 1, 'decimal_place': 1}
 # print(extract_places(1000))          # Output: {'1st_place': 0, '10th_place': 0, '100th_place': 0, '1000th_place': 1, 'decimal_place': 0}

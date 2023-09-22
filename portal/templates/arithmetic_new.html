@@ -32,7 +32,7 @@
 <body>
     <div class="example" style="height: 100% !important;">
         <div id="nav" style="clear:both;">
-            <h1 style="color: white;text-align: center;"> Polynomials </h1>
+            <h1 style="color: white;text-align: center;"> Arithmetic Expressions </h1>
 
             <ul style="margin-top: -20px;">
                 <li style="padding-left: 179px;"><a href="/uncg_math">Home</a></li>
@@ -46,7 +46,7 @@
 <!--            </ul>-->
         </div>
 
-        <h2>Polynomials</h2>
+        <h2>Arithmetic Expressions</h2>
         <FORM>
             <TABLE border=0 width=100% bgcolor=moccasin>
         <tr>
@@ -78,7 +78,7 @@
 
         data_dict = {'eqn':eqn}
         $.ajax({
-                url: '/uncg_math/polynomials',
+                url: '/uncg_math/arithmetic_new',
                 data: JSON.stringify(data_dict),
                 type: 'POST',
                 contentType: "application/json",

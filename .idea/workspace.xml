@@ -5,19 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="intilization">
-      <change afterPath="$PROJECT_DIR$/portal/scripts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/fraction_conversion_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/templates/polynomial.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/word_to_decimal.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/arithmetic_new.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/decimal_conversion.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/decimal_conversion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/fraction_conversion.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/fraction_conversion.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/patterns.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/patterns.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/templates/polynomial.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/polynomial.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
