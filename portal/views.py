@@ -45,6 +45,76 @@ def home():
 # def home():
 #    if request.method == "GET":
 #        return render_template("home.html")
+# def repeated_fraction_handler(decimal_str):
+#     # Split the decimal string into integer, non-repeating, and repeating parts
+#     parts = decimal_str.split('.')
+#     integer_part = int(parts[0])
+#     decimal_part = parts[1]
+#
+#     # Split the decimal part into non-repeating and repeating parts
+#     if '(' in decimal_part:
+#         non_repeating, repeating = decimal_part.split('(')
+#         repeating = repeating.rstrip(')')
+#     else:
+#         non_repeating, repeating = decimal_part, ''
+#
+#     # Calculate the numerator and denominator
+#     non_repeating_len = len(non_repeating)
+#     repeating_len = len(repeating)
+#
+#     denominator = 10 ** non_repeating_len
+#     numerator = integer_part * denominator + int(non_repeating)
+#
+#     if repeating:
+#         numerator = numerator * (10 ** repeating_len) + int(repeating)
+#         denominator *= (10 ** repeating_len) - 1
+#
+#     # Simplify the fraction
+#     common_divisor = sp.gcd(numerator, denominator)
+#     numerator //= common_divisor
+#     denominator //= common_divisor
+#
+#     return (numerator, denominator)
+
+
+
+@bp.route('repeated_to_fraction',methods=["GET","POST"])
+def repeated_to_fraction():
+    if request.method == "POST":
+        data = request.json
+        result = repeated_fraction_handler(data['fraction'])
+        return jsonify({'result':result})
+
+
+@bp.route('/factorization',methods=["GET","POST"])
+def factoring():
+    if request.method == "GET":
+        return render_template("factorization.html")
+    else:
+        data = request.json
+        result = factor_handler(data['fraction'])
+        return jsonify({'result':result})
+
+
+
+import sympy as sp
+
+
+def factor_handler(expression):
+    try:
+        # Parse the expression using sympy
+        expr = sp.sympify(expression)
+
+        # Factor the expression
+        factored_expr = sp.factor(expr)
+
+        return str(factored_expr)
+    except sp.SympifyError:
+        return "Invalid expression"
+
+
+
+
 
 @bp.route('/arithmetic_new',methods = ["GET","POST"])
 def arithmetic_new():
@@ -90,6 +160,8 @@ def simplify_step_by_step(equations, variable):
     return f"Simplified equation: {simplified_equation}"
 
 
+
+
 @bp.route('/polynomials', methods=["GET", "POST"])
 def polynomial_simplification():
     if request.method == 'GET':
@@ -121,6 +193,39 @@ def decimal_conversion():
             return jsonify({'result': result})
 
 
+def repeated_fraction_handler(decimal_str):
+    # Split the decimal string into integer and fractional parts
+    integer_part, fractional_part = decimal_str.split('.')
+
+    # Initialize the numerator and denominator
+    numerator = 0
+    denominator = 1
+
+    # Process the integer part
+    if integer_part:
+        numerator = int(integer_part)
+
+    # Process the fractional part
+    if '(' in fractional_part:
+        non_repeating, repeating = fractional_part.split('(')
+        repeating = repeating.rstrip(')')
+        non_repeating_len = len(non_repeating)
+        repeating_len = len(repeating)
+
+        numerator *= 10 ** non_repeating_len + int(non_repeating + repeating) - int(non_repeating)
+        denominator *= (10 ** non_repeating_len * (10 ** repeating_len - 1))
+    else:
+        denominator *= 10 ** len(fractional_part)
+        numerator = int(fractional_part)
+
+    # Simplify the fraction
+    common_divisor = sp.gcd(numerator, denominator)
+    numerator //= common_divisor
+    denominator //= common_divisor
+
+    return "{}/{}".format(numerator,denominator)
+
+
 @bp.route('/fraction_conversion', methods=["GET", "POST"])
 def fraction_conversion():
     if request.method == "GET":
@@ -128,10 +233,15 @@ def fraction_conversion():
 
     if request.method == "POST":
         data = request.json
-        num = int(data['fraction'].split("/")[0])
-        denom = int(data['fraction'].split("/")[1])
-        result = repeating_decimal(num, denom)
-        return jsonify({'result': result})
+        if data['type'] == 'fraction_to_repeated':
+            num = int(data['fraction'].split("/")[0])
+            denom = int(data['fraction'].split("/")[1])
+            result = repeating_decimal(num, denom)
+            return jsonify({'result': result})
+        else:
+            result = repeated_fraction_handler(data['fraction'])
+            return jsonify({'result': result})
+
 
 
 def identify_and_generate(sequence_str, n):

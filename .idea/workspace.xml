@@ -5,12 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="intilization">
-      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/word_to_decimal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portal/templates/arithmetic_new.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/factorization.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/decimal_conversion.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/decimal_conversion.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/templates/fraction_conversion.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/fraction_conversion.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/polynomial.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/polynomial.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
@@ -30,6 +29,19 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="fff52eae-89ae-48cf-b1ba-108a4f2720aa" />
+        <option name="url" value="https://github.com/saijaligama/g_math.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -215,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1692922723089</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="intilization">
+      <created>1695357609655</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1695357609655</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

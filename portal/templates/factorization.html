@@ -32,7 +32,7 @@
 <body>
     <div class="example" style="height: 100% !important;">
         <div id="nav" style="clear:both;">
-            <h1 style="color: white;text-align: center;"> Fraction Conversion </h1>
+            <h1 style="color: white;text-align: center;"> Factorization </h1>
 
             <ul style="margin-top: -20px;">
                 <li style="padding-left: 179px;"><a href="/uncg_math">Home</a></li>
@@ -47,9 +47,9 @@
         </div>
 
 
-   
 
-        <h2> <a id="Get_Arithmetic_Geometric">Fraction Conversion.</a></h2>
+
+        <h2> <a id="Get_Arithmetic_Geometric"> Factorization.</a></h2>
 
 
         <FORM>
@@ -57,23 +57,23 @@
                 <tr>
                     <td> <br> </td>
                 </tr>
-                
+
 
                 <TR>
-                    <TD >Enter Fraction</TD>
-                    <TD >Repeated Fractions</TD>
-                   
-                </TR>
-               </TR>
-                <TR >
-                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID="fraction" data-my-input></TD>
-                    <td><span id=fraction_answer>---------</span></td>
-                </TR>
-                <td><input type="radio" name="option" value="fraction_to_repeated" onclick="storeType(this.value)"> Fraction to Repeated </td>
-                    <td><input type="radio" name="option" value="repeated" onclick="storeType(this.value)"> Repeated to Fraction</td>
+                    <TD ALIGN=CENTER>Enter Equation</TD>
+                    <TD ALIGN=CENTER>Factors</TD>
 
+                </TR>
+                <TR ALIGN=CENTER>
+                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID=fraction data-my-input style="padding: 12px;width: 250px;"></TD>
+<!--                    <td><INPUT TYPE=TEXT ID="fraction_answer"> </td>-->
+                    <TD><span id="fraction_answer" >-------------------</span></TD>
+
+<!--                   <INPUT TYPE=TEXT NAME=arith_or_geo_input ID=arith_for_geo_input "></td>-->
+
+                </TR>
                 <TR>
-                    <TD>
+                    <TD ALIGN=CENTER>
                         <INPUT TYPE="button" class="widebutton" value="Convert" onclick="convert_fraction()">
                     </TD>
                 </tr>
@@ -89,8 +89,8 @@
 <!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=a_n_inputval12 ID=a_n_inputval12_Results disabled></TD>-->
 <!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=S_n_inputval12 ID=S_n_inputval12_Results disabled></TD>-->
 <!--                </TR>-->
-        
-               
+
+
                 <tr>
                     <td> <br> </td>
                 </tr>
@@ -105,17 +105,12 @@
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
     <script>
-    var type = "";
-    function storeType(value){
-    type = value
-    }
-
-    function convert_fraction(){
+        function convert_fraction(){
             frac = document.getElementById("fraction").value;
-            frac_dict = {'fraction' : frac,'type':type}
+            frac_dict = {'fraction' : frac}
 
             $.ajax({
-                url: '/uncg_math/fraction_conversion',
+                url: '/uncg_math/factorization',
                 data: JSON.stringify(frac_dict),
                 type: 'POST',
                 contentType: "application/json",
