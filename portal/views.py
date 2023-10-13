@@ -41,6 +41,53 @@ def home():
         return render_template("home.html")
 
 
+@bp.route('/rationals', methods=["GET","POST"])
+def rationals():
+    if request.method == "GET":
+        return render_template("rationals.html")
+    else:
+        data =request.json
+        result = simplify_expression(data['eqn'])
+        return jsonify({'result':result})
+
+
+def simplify_expression(expression):
+    try:
+        # Define symbolic variables
+        a = sp.symbols('a')
+        b = sp.symbols('b')
+
+        # Parse the input expression using SymPy
+        parsed_expression = sp.sympify(expression)
+
+        # Simplify the parsed expression
+        simplified_expression = sp.simplify(parsed_expression)
+
+        return str(simplified_expression)
+    except sp.SympifyError:
+        return "Invalid input"
+
+
+# def simplify_expression_with_steps(expression):
+#     try:
+#         # Define symbolic variables
+#         a = sp.symbols('a')
+#         b = sp.symbols('b')
+#
+#         # Parse the input expression using SymPy
+#         parsed_expression = sp.sympify(expression)
+#
+#         # Simplify the expression with steps
+#         simplified_expression, steps = sp.simplify(parsed_expression, steps=True)
+#
+#         # Convert the expression and steps to strings
+#         simplified_expression_str = str(simplified_expression)
+#         steps_str = [str(step) if isinstance(step, sp.Pow) else str(step) for step in steps]
+#
+#         return simplified_expression_str, steps_str
+#     except sp.SympifyError:
+#         return "Invalid input"
+
 # @bp.route('/', methods=["GET", "POST"])
 # def home():
 #    if request.method == "GET":
@@ -114,7 +161,8 @@ def factor_handler(expression):
 
 
 
-
+import shunting_yard as sy
+import math
 
 @bp.route('/arithmetic_new',methods = ["GET","POST"])
 def arithmetic_new():
@@ -122,20 +170,88 @@ def arithmetic_new():
         return render_template("arithmetic_new.html")
     if request.method == "POST":
         data = request.json
-        result = eval(data['eqn'])
+        # result = eval(data['eqn'])
+        result = sy.compute(data['eqn'])
         return jsonify({'result':result})
 
 
 from sympy import symbols, expand, sympify
 
+def simplify_equations(equations):
+    results = {}
 
-def simplify_step_by_step(equations, variable):
-    var = symbols(variable)
+    for eq_index, equation in enumerate(equations, 1):
+        equation = sympify(equation)
+        step_results = {}
+
+        step_results["Step 1: Identify the terms"] = [str(term) for term in equation.args]
+
+        combined_equation = expand(equation)
+        step_results["Step 2: Combine the terms"] = str(combined_equation)
+
+        simplified_equation = expand(combined_equation)
+        step_results["Step 3: Combine like terms (if any)"] = str(simplified_equation)
+
+        results[f"Equation {eq_index}"] = step_results
+
+    return results
+
+
+# def simplify_step_by_step(data):
+#     # var = symbols(data[1])
+#     equations = data[0]
+#
+#     if len(data) > 1:
+#         var_str = data[1]
+#         var = symbols(var_str)
+#     else:
+#         var = symbols("x")
+#
+#     if not isinstance(equations, list):
+#         equations = [equations]
+#
+#     for eq_index, equation in enumerate(equations, 1):
+#         results = {}
+#         # Convert string equation to sympy expression
+#         equation = sympify(equation)
+#
+#         print(f"\n--- Simplifying equation {eq_index} ---")
+#
+#         args = equation.args
+#
+#         if not args:
+#             print(f"Equation is a single term: {equation}")
+#             continue
+#
+#         print("Step 1: Identify the terms.")
+#         for i, term in enumerate(args, 1):
+#             print(f"Term {i}: {term}")
+#
+#         print("\nStep 2: Combine the terms.")
+#         combined_equation = expand(equation)
+#         print(f"Combined result: {combined_equation}")
+#
+#         print("\nStep 3: Combine like terms (if any).")
+#         simplified_equation = expand(combined_equation)
+#     return f"Simplified equation: {simplified_equation}"
+
+def simplify_step_by_step(data):
+    # var = symbols(data[1])
+    equations = data[0]
+
+    if len(data) > 1:
+        var_str = data[1]
+        var = symbols(var_str)
+    else:
+        var = symbols("x")
 
     if not isinstance(equations, list):
         equations = [equations]
 
+    simplified_equation = None
+
     for eq_index, equation in enumerate(equations, 1):
+        results = []
         # Convert string equation to sympy expression
         equation = sympify(equation)
 
@@ -145,21 +261,25 @@ def simplify_step_by_step(equations, variable):
 
         if not args:
             print(f"Equation is a single term: {equation}")
+
             continue
 
         print("Step 1: Identify the terms.")
+        results.append("Step 1: Identify the terms.")
         for i, term in enumerate(args, 1):
             print(f"Term {i}: {term}")
+            results.append(f"Term {i}: {term}")
 
         print("\nStep 2: Combine the terms.")
         combined_equation = expand(equation)
         print(f"Combined result: {combined_equation}")
+        results.append(f"Combined result: {combined_equation}")
 
         print("\nStep 3: Combine like terms (if any).")
         simplified_equation = expand(combined_equation)
-    return f"Simplified equation: {simplified_equation}"
-
-
+        results.append(f"Simplified equation: {simplified_equation}")
+    # return f"Simplified equation: {simplified_equation}"
+    return results
 
 
 @bp.route('/polynomials', methods=["GET", "POST"])
@@ -169,7 +289,7 @@ def polynomial_simplification():
     elif request.method == 'POST':
         data = request.json
         inp = data['eqn'].split(',')
-        result = simplify_step_by_step(inp[0], inp[1])
+        result = simplify_step_by_step(inp)
         return jsonify({'result': result})
 
 
@@ -226,6 +346,78 @@ def repeated_fraction_handler(decimal_str):
     return "{}/{}".format(numerator,denominator)
 
 
+# def repeated_fraction_handler(decimal_str):
+#     # Split the decimal string into integer and fractional parts
+#     integer_part, fractional_part = decimal_str.split('.')
+#
+#     # Initialize the numerator and denominator
+#     numerator = 0
+#     denominator = 1
+#
+#     # Process the integer part
+#     if integer_part:
+#         numerator = int(integer_part)
+#
+#     if '(' in fractional_part:
+#         parts = fractional_part.split('(')
+#         if '.' in parts[0]:
+#             non_repeating = parts[0].split('.')[1]
+#         else:
+#             non_repeating = ''
+#
+#         repeating = parts[1].rstrip(')')
+#
+#     # rest of logic
+#
+#         # rest of logic
+#
+#     # Simplify the fraction
+#     common_divisor = sp.gcd(numerator, denominator)
+#     numerator //= common_divisor
+#     denominator //= common_divisor
+#
+#     return "{}/{}".format(numerator,denominator)
+
+
+# def repeated_fraction_handler(decimal_str):
+#     # Split into integer and fractional parts
+#     integer_part, fractional_part = decimal_str.split('.')
+#
+#     # Initialize numerator and denominator
+#     numerator = 0
+#     denominator = 1
+#
+#     # Process integer part
+#     if integer_part:
+#         numerator = int(integer_part)
+#
+#     # Extract repeating part
+#     if '(' in fractional_part:
+#         parts = fractional_part.split('(')
+#         if '.' in parts[0]:
+#             non_repeating = parts[0].split('.')[1]
+#         else:
+#             non_repeating = ''
+#         repeating = parts[1].rstrip(')')
+#
+#     # Process repeating part
+#     if repeating:
+#         repeating_len = len(repeating)
+#         numerator *= 10 ** repeating_len
+#         denominator *= (10 ** repeating_len - 1)
+#
+#     # Process non-repeating part
+#     if non_repeating:
+#     # Logic to process non-repeating
+#
+#     # Simplify
+#     numerator //= gcd(numerator, denominator)
+#     denominator //= gcd(numerator, denominator)
+#
+#     return "{}/{}".format(numerator, denominator)
+#
+
+
 @bp.route('/fraction_conversion', methods=["GET", "POST"])
 def fraction_conversion():
     if request.method == "GET":
@@ -243,81 +435,51 @@ def fraction_conversion():
             return jsonify({'result': result})
 
 
+from decimal import Decimal
+from fractions import Fraction
+from decimal import InvalidOperation
+
 
 def identify_and_generate(sequence_str, n):
-    sequence = [int(x.strip()) for x in sequence_str.split(",")]
-    print("Debug: Converted sequence:", sequence)
+    sequence = []
+    logic_message = ""
+    results = []
+
     n = int(n)
+
+    elements = [x.strip() for x in sequence_str.split(",")]
+
+    for element in elements:
+        try:
+            sequence.append(Decimal(element))
+        except InvalidOperation:
+            try:
+                sequence.append(Fraction(element))
+            except ValueError:
+                raise ValueError(f"Invalid element in sequence: {element}")
 
     diffs = [sequence[i] - sequence[i-1] for i in range(1, len(sequence))]
     ratios = [sequence[i] / sequence[i-1] for i in range(1, len(sequence)) if sequence[i-1] != 0]
-    print("Debug: diffs[0] type:", type(diffs[0]), "Value:", diffs[0])
-    print("Debug: n type:", type(n), "Value:", n)
 
-    # Check if it's an arithmetic progression
     if len(set(diffs)) == 1:
-        next_terms = [sequence[-1] + (i+1)*diffs[0] for i in range(n)]
-        return f"Arithmetic progression detected with a common difference of {diffs[0]}. Next {n} terms: {next_terms}"
-
-    # Check if it's a geometric progression
-    elif len(set(ratios)) == 1:
-        next_terms = [sequence[-1] * (ratios[0]**(i+1)) for i in range(n)]
-        return f"Geometric progression detected with a common ratio of {ratios[0]}. Next {n} terms: {next_terms}"
-
-    # Try to detect recurring pattern in diffs
-    pattern_length = None
-    for length in range(1, len(diffs)):
-        if diffs[:length] == diffs[length:length*2]:
-            pattern_length = length
-            break
-
-    # If pattern detected, generate next terms
-    if pattern_length:
-        next_terms = []
+        common_difference = diffs[0]
         last_term = sequence[-1]
-        for i in range(n):
-            diff = diffs[i % pattern_length]
-            last_term += diff
-            next_terms.append(last_term)
-        return f"Pattern detected with recurring differences: {diffs[:pattern_length]}. Next {n} terms: {next_terms}"
-    else:
-        return "Pattern not recognized."
+        logic_message = f"a(n-1)d, where a={last_term}, d={common_difference}."
+        results = [str(last_term + i * common_difference) for i in range(n)]
+        # results = [str(last_term + i * common_difference) for i in range(1, n)]
+    elif len(set(ratios)) == 1:
+        common_ratio = ratios[0]
+        first_term = sequence[0]
+        last_term = sequence[-1]
+        logic_message = f"a * r^(n-1), where a={first_term}, r={common_ratio}."
 
-from fractions import Fraction
+        results = [str(last_term * (common_ratio ** i)) for i in range(n)]
 
-# def identify_and_generate(sequence_str, n):
-#     sequence_str = sequence_str.replace(" ", "")  # Remove spaces for better parsing
-#     sequence = [Fraction(x.strip()) for x in sequence_str.split(",")]
-#     print("Debug: Converted sequence:", sequence)
-#     n = int(n)
-#
-#     diffs = [sequence[i] - sequence[i-1] for i in range(1, len(sequence))]
-#     print("Debug: diffs[0] type:", type(diffs[0]), "Value:", diffs[0])
-#     print("Debug: n type:", type(n), "Value:", n)
-#
-#     # Try to detect recurring pattern in diffs
-#     pattern_length = None
-#     for length in range(1, len(diffs)):
-#         is_pattern = True
-#         for i in range(len(diffs) - length):
-#             if diffs[i] != diffs[i + length]:
-#                 is_pattern = False
-#                 break
-#         if is_pattern:
-#             pattern_length = length
-#             break
-#
-#     # If pattern detected, generate next terms
-#     if pattern_length:
-#         next_terms = []
-#         last_term = sequence[-1]
-#         for i in range(n):
-#             diff = diffs[i % pattern_length]
-#             last_term += diff
-#             next_terms.append(last_term)
-#         return f"Pattern detected with recurring differences: {diffs[:pattern_length]}. Next {n} terms: {next_terms}"
-#     else:
-#         return "Pattern not recognized."
+    if not logic_message:
+        logic_message = "Pattern not recognized."
+
+    return logic_message, "Next terms are {}".format(results)
+
 
 
 @bp.route('/patterns', methods=["GET", "POST"])
