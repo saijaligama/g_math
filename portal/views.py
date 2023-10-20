@@ -21,6 +21,10 @@ from portal.scripts.utils.fraction_conversion_util import repeating_decimal
 from portal.scripts.utils.decimal_word_conversion_util import number_to_words, round_to_nearest_10th, extract_places, \
     text_to_decimal
 
+from portal.scripts.utils.pattern_handler import identify_and_generate
+from portal.scripts.utils.equations_inequalities_handler import calculate_equation
+
+
 bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./templates", static_folder="./static")
 
 
@@ -28,6 +32,16 @@ bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./tem
 # def login():
 #     if request.method == "GET":
 #         return render_template("index.html")
+
+@bp.route('/equations_new', methods=['GET','POST'])
+def equation_service():
+    if request.method == "GET":
+        return render_template("equations_new.html")
+    else:
+        data = request.json
+        result = calculate_equation(data['eqn'])
+        return jsonify({'result':result})
+
 
 @bp.route('/calculus', methods=["GET", "POST"])
 def calculus():
@@ -440,45 +454,7 @@ from fractions import Fraction
 from decimal import InvalidOperation
 
 
-def identify_and_generate(sequence_str, n):
-    sequence = []
-    logic_message = ""
-    results = []
 
-    n = int(n)
-
-    elements = [x.strip() for x in sequence_str.split(",")]
-
-    for element in elements:
-        try:
-            sequence.append(Decimal(element))
-        except InvalidOperation:
-            try:
-                sequence.append(Fraction(element))
-            except ValueError:
-                raise ValueError(f"Invalid element in sequence: {element}")
-
-    diffs = [sequence[i] - sequence[i-1] for i in range(1, len(sequence))]
-    ratios = [sequence[i] / sequence[i-1] for i in range(1, len(sequence)) if sequence[i-1] != 0]
-
-    if len(set(diffs)) == 1:
-        common_difference = diffs[0]
-        last_term = sequence[-1]
-        logic_message = f"a(n-1)d, where a={last_term}, d={common_difference}."
-        results = [str(last_term + i * common_difference) for i in range(n)]
-        # results = [str(last_term + i * common_difference) for i in range(1, n)]
-    elif len(set(ratios)) == 1:
-        common_ratio = ratios[0]
-        first_term = sequence[0]
-        last_term = sequence[-1]
-        logic_message = f"a * r^(n-1), where a={first_term}, r={common_ratio}."
-
-        results = [str(last_term * (common_ratio ** i)) for i in range(n)]
-
-    if not logic_message:
-        logic_message = "Pattern not recognized."
-
-    return logic_message, "Next terms are {}".format(results)
 
 
 

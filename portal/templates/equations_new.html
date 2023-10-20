@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title> Fraction Conversion</title>
+    <title> Equations</title>
 
     <link rel="stylesheet" type="text/css" href="/uncg_math/static/Geometry_files/mystyle.css">
     <meta name="description" content="Regular polygon, Trangle,
@@ -32,7 +32,7 @@
 <body>
     <div class="example" style="height: 100% !important;">
         <div id="nav" style="clear:both;">
-            <h1 style="color: white;text-align: center;"> Factorization </h1>
+            <h1 style="color: white;text-align: center;"> Equations and Inequalities </h1>
 
             <ul style="margin-top: -20px;">
                 <li style="padding-left: 179px;"><a href="/uncg_math">Home</a></li>
@@ -49,7 +49,7 @@
 
 
 
-        <h2> <a id="Get_Arithmetic_Geometric"> Factorization.</a></h2>
+        <h2> <a id="Get_Arithmetic_Geometric"> Equations and Inequalities.</a></h2>
 
 
         <FORM>
@@ -107,10 +107,10 @@
     <script>
         function convert_fraction(){
             frac = document.getElementById("fraction").value;
-            frac_dict = {'fraction' : frac}
+            frac_dict = {'eqn' : frac}
 
             $.ajax({
-                url: '/uncg_math/factorization',
+                url: '/uncg_math/equations_new',
                 data: JSON.stringify(frac_dict),
                 type: 'POST',
                 contentType: "application/json",

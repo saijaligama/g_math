@@ -70,49 +70,29 @@
                 </TR>
                                     <td><input type="radio" name="option" value="decimal" onclick="storeType(this.value)"> Decimal to Text </td>
                     <td><input type="radio" name="option" value="text" onclick="storeType(this.value)"> Text to Decimal </td>
-<!--                <tr>-->
-<!--                    <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>-->
-<!--                    <span id="">Results :</span>-->
-<!--                    </TD>-->
-<!--                </tr>-->
-<!--                <TR ALIGN=CENTER>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=a1_inputval12 ID=a1_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=n_inputval12 ID=n_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=d_or_r_inputval12 ID=d_or_r_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=a_n_inputval12 ID=a_n_inputval12_Results disabled></TD>-->
-<!--                    <TD><INPUT CLASS="text_box_st2" TYPE=TEXT NAME=S_n_inputval12 ID=S_n_inputval12_Results disabled></TD>-->
-<!--                </TR>-->
-          </form>
-          <form>
+
+
                 <TR>
                     <TD>
                         <INPUT TYPE="button" class="widebutton" value="Convert" onclick="convert_decimal()">
                     </TD>
-<!--                    <TD>-->
-<!--                        <INPUT TYPE="button" class="widebutton" value="Show Digits" style="width: 120px;margin-right: 55px;margin-left: 20px;" onclick="show_decimals()">-->
-<!--                        -->
-<!--                        <INPUT TYPE ="button" class="widebutton" value="Round To" onclick="round_to()">-->
-<!--                    </TD>-->
-<!--                   -->
-
-<!--                </TR>-->
-<!--                <tr>-->
-<!--                    <td> <br> </td>-->
-<!--                    <td><input type="text" id="show_digits_answer">-->
-<!--                        <input type="text" id="round_to_answer"></td>-->
-<!--                    -->
-<!--                </tr>-->
-
-<!--               -->
-<!--                <tr>-->
-<!--                    <td> <br> </td>-->
-<!--                </tr>-->
-                    <TR>
+                    <TD>
+                    <INPUT TYPE="button" class="widebutton" value="Show Digits" style="width: 120px;" onclick="show_decimals()">
+                </TD>
                 <TD>
                     <INPUT TYPE="button" class="widebutton" value="Round To" onclick="round_to()">
                 </TD>
+                </TR>
+
+
+                    <TR>
                 <TD>
-                    <INPUT TYPE="text" id="round_to_answer">
+                    <span id="show_digits_nswer"></span></TD>
+                        <TD>
+                    <span id="show_digits_answer">------------</span></TD>
+
+                <TD>
+                    <span id="round_to_answer">------------</span>
                 </TD>
             </TR>
             <tr>
@@ -120,21 +100,13 @@
             </tr>
 
             <!-- 'Show Digits' Button and TextBox -->
-            <TR>
-                <TD>
-                    <INPUT TYPE="button" class="widebutton" value="Show Digits" style="width: 120px;" onclick="show_decimals()">
-                </TD>
-                <TD>
-                    <INPUT TYPE="text" id="show_digits_answer" style="width: 200px;"> <!-- I've increased the width here -->
-                </TD>
-            </TR>
+
             <tr>
                 <td> <br> </td>
             </tr>
 
             </TABLE>
         </FORM>
-
 
 
     </div>
@@ -174,7 +146,7 @@
     function round_to(){
     dec_to_convert = document.getElementById("decimal").value;
 
-    dec_dict = {'operation':'round_to','decimal_to_convert':dec_to_convert}
+    dec_dict = {'operation':'round_to','decimal_to_convert':dec_to_convert,'type':'decimal'}
 
      $.ajax({
                 url: '/uncg_math/decimal_conversion',
@@ -183,7 +155,7 @@
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("round_to_answer").value = data2["result"];
+                    document.getElementById("round_to_answer").innerText = data2["result"];
                     return true;
                 },
                 error: function (data2) {
@@ -220,7 +192,8 @@ function show_decimals() {
     let dec_to_convert = document.getElementById("decimal").value;
     let dec_dict = {
         'operation': 'show_decimals',
-        'decimal_to_convert': dec_to_convert
+        'decimal_to_convert': dec_to_convert,
+        'type':type
     }
 
     $.ajax({
@@ -231,7 +204,7 @@ function show_decimals() {
         dataType: 'json',
         success: function (data2) {
             let formattedResult = formatResult(data2["result"]);
-            document.getElementById("show_digits_answer").value = formattedResult;
+            document.getElementById("show_digits_answer").innerText = formattedResult;
             return true;
         },
         error: function (data2) {
