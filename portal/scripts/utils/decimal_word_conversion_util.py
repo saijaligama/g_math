@@ -17,7 +17,9 @@ def number_to_words(num):
 def round_to_nearest_10th(num):
     return round(num, -1)
 
-def extract_places(num):
+def extract_places(data):
+    num = float(data['decimal_to_convert'])
+    place = data['show_digit_num']
     num_str = str(num)
     if '.' in num_str:
         whole, decimal = num_str.split('.')
@@ -36,11 +38,11 @@ def extract_places(num):
 
     places_dict = {}
     for i, digit in enumerate(reversed(whole)):
-        places_dict[f'{place_names[i]}_place'] = int(digit)
+        places_dict[f'{place_names[i]}'] = int(digit)
 
     places_dict['decimal_place'] = int(decimal)
 
-    return places_dict
+    return places_dict[place]
 
 
 def text_to_decimal(text):

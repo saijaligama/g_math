@@ -56,7 +56,9 @@
             <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
                 <span>Function:</span><br>
                 <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <input type="radio" id="radioOption" value="integer"> Integer
                 <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_polynomial()">
+
             </TD>
         </TR>
         <tr>
@@ -74,9 +76,11 @@
 
     <script>
        function get_polynomial(){
-        eqn = document.getElementById("differentiation_input").value
+        var eqn = document.getElementById("differentiation_input").value
+        var radioValue = document.getElementById("radioOption").checked ? document.getElementById("radioOption").value : "dec";
 
-        data_dict = {'eqn':eqn}
+        data_dict = {'eqn':eqn,
+        'radioValue': radioValue}
         $.ajax({
                 url: '/uncg_math/arithmetic_new',
                 data: JSON.stringify(data_dict),

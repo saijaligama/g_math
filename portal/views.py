@@ -24,7 +24,6 @@ from portal.scripts.utils.decimal_word_conversion_util import number_to_words, r
 from portal.scripts.utils.pattern_handler import identify_and_generate
 from portal.scripts.utils.equations_inequalities_handler import calculate_equation
 
-
 bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./templates", static_folder="./static")
 
 
@@ -33,14 +32,21 @@ bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./tem
 #     if request.method == "GET":
 #         return render_template("index.html")
 
-@bp.route('/equations_new', methods=['GET','POST'])
+
+@bp.route('/inequalities_new', methods=['GET', 'POST'])
+def inequalities_new():
+    if request.method == 'GET':
+        return render_template("inequality_new.html")
+
+
+@bp.route('/equations_new', methods=['GET', 'POST'])
 def equation_service():
     if request.method == "GET":
         return render_template("equations_new.html")
     else:
         data = request.json
         result = calculate_equation(data['eqn'])
-        return jsonify({'result':result})
+        return jsonify({'result': result})
 
 
 @bp.route('/calculus', methods=["GET", "POST"])
@@ -55,14 +61,14 @@ def home():
         return render_template("home.html")
 
 
-@bp.route('/rationals', methods=["GET","POST"])
+@bp.route('/rationals', methods=["GET", "POST"])
 def rationals():
     if request.method == "GET":
         return render_template("rationals.html")
     else:
-        data =request.json
+        data = request.json
         result = simplify_expression(data['eqn'])
-        return jsonify({'result':result})
+        return jsonify({'result': result})
 
 
 def simplify_expression(expression):
@@ -138,24 +144,22 @@ def simplify_expression(expression):
 #     return (numerator, denominator)
 
 
-
-@bp.route('repeated_to_fraction',methods=["GET","POST"])
+@bp.route('repeated_to_fraction', methods=["GET", "POST"])
 def repeated_to_fraction():
     if request.method == "POST":
         data = request.json
         result = repeated_fraction_handler(data['fraction'])
-        return jsonify({'result':result})
+        return jsonify({'result': result})
 
 
-@bp.route('/factorization',methods=["GET","POST"])
+@bp.route('/factorization', methods=["GET", "POST"])
 def factoring():
     if request.method == "GET":
         return render_template("factorization.html")
     else:
         data = request.json
         result = factor_handler(data['fraction'])
-        return jsonify({'result':result})
-
+        return jsonify({'result': result})
 
 
 import sympy as sp
@@ -174,11 +178,21 @@ def factor_handler(expression):
         return "Invalid expression"
 
 
-
 import shunting_yard as sy
 import math
 
-@bp.route('/arithmetic_new',methods = ["GET","POST"])
+def convert_to_mixed_fraction(decimal):
+    # Convert the decimal to a fraction
+    fraction = Fraction(decimal).limit_denominator()
+
+    # Extract the whole number and the fractional part
+    whole_number = fraction.numerator // fraction.denominator
+    fractional_part = fraction - whole_number
+
+    return f"{whole_number} {fractional_part.numerator}/{fraction.denominator}"
+
+
+@bp.route('/arithmetic_new', methods=["GET", "POST"])
 def arithmetic_new():
     if request.method == "GET":
         return render_template("arithmetic_new.html")
@@ -186,10 +200,13 @@ def arithmetic_new():
         data = request.json
         # result = eval(data['eqn'])
         result = sy.compute(data['eqn'])
-        return jsonify({'result':result})
+        if data['radioValue'] == "integer":
+            result = convert_to_mixed_fraction(result)
+        return jsonify({'result': result})
 
 
 from sympy import symbols, expand, sympify
+
 
 def simplify_equations(equations):
     results = {}
@@ -309,22 +326,50 @@ def polynomial_simplification():
 
 @bp.route('/decimal_conversion', methods=["GET", "POST"])
 def decimal_conversion():
-    if request.method == "GET":
-        return render_template("decimal_conversion.html")
-    if request.method == "POST":
+    if request.method == 'GET':
+        return render_template('decimal_conversion.html')
+
+    if request.method == 'POST':
         data = request.json
-        if data['type'] == 'decimal':
+
+        if data['type'] == 'text_dec_dec_text':
             result = ""
-            if data['operation'] == 'dec_to_word':
-                result = number_to_words(data['decimal_to_convert'])
-            elif data['operation'] == 'round_to':
+            dec_to_convert = data.get("decimal")
+            text_to_convert = data.get("text")
+
+            if dec_to_convert:
+                result = number_to_words(dec_to_convert)
+                return {'decimal':dec_to_convert,'text':result}
+            elif text_to_convert:
+                result = text_to_decimal(text_to_convert)
+                return jsonify({'decimal':result,'text':text_to_convert})
+        else:
+
+            if data['operation'] == 'round_to':
+                # Implement the 'round_to_nearest_10th()' function for rounding
                 result = round_to_nearest_10th(float(data['decimal_to_convert']))
             else:
-                result = extract_places((float(data['decimal_to_convert'])))
-            return jsonify({'result': result})
-        else:
-            result = text_to_decimal(data['decimal_to_convert'])
-            return jsonify({'result': result})
+                # Implement the 'extract_places()' function for specific extraction
+                result = extract_places(data)
+            return jsonify({'result':result})
+
+# def decimal_conversion():
+#     if request.method == "GET":
+#         return render_template("decimal_conversion.html")
+#     if request.method == "POST":
+#         data = request.json
+#         if data['type'] == 'decimal':
+#             result = ""
+#             if data['operation'] == 'dec_to_word':
+#                 result = number_to_words(data['decimal_to_convert'])
+#             elif data['operation'] == 'round_to':
+#                 result = round_to_nearest_10th(float(data['decimal_to_convert']))
+#             else:
+#                 result = extract_places(data)
+#             return jsonify({'result': result})
+#         else:
+#             result = text_to_decimal(data['decimal_to_convert'])
+#             return jsonify({'result': result})
 
 
 def repeated_fraction_handler(decimal_str):
@@ -357,7 +402,7 @@ def repeated_fraction_handler(decimal_str):
     numerator //= common_divisor
     denominator //= common_divisor
 
-    return "{}/{}".format(numerator,denominator)
+    return "{}/{}".format(numerator, denominator)
 
 
 # def repeated_fraction_handler(decimal_str):
@@ -452,10 +497,6 @@ def fraction_conversion():
 from decimal import Decimal
 from fractions import Fraction
 from decimal import InvalidOperation
-
-
-
-
 
 
 @bp.route('/patterns', methods=["GET", "POST"])

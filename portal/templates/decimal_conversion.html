@@ -65,11 +65,24 @@
                    
                 </TR>
                 <TR ALIGN=CENTER>
-                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID="decimal" data-my-input></TD>
-                    <td><span id=dec_to_word_answer>---------</span></td>
+                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID="decimal" data-my-input style="padding: 2px;width: 160px;"></TD>
+                    <td><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval122 ID="text" style="padding: 2px;width: 300px;"></td>
+<!--                    <td><span id=dec_to_word_answer>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span></td>-->
                 </TR>
-                                    <td><input type="radio" name="option" value="decimal" onclick="storeType(this.value)"> Decimal to Text </td>
-                    <td><input type="radio" name="option" value="text" onclick="storeType(this.value)"> Text to Decimal </td>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                    <td>
+                        <input type="text" id="show_digit_input">
+                    </td>
+
+                </tr>
 
 
                 <TR>
@@ -121,8 +134,9 @@
 
     function convert_decimal(){
     dec_to_convert = document.getElementById("decimal").value;
+    text_to_convert = document.getElementById("text").value
 
-    dec_dict = {'operation':'dec_to_word','decimal_to_convert':dec_to_convert,'type':type}
+    dec_dict = {'decimal':dec_to_convert,'text':text_to_convert,'type':'text_dec_dec_text'}
 
      $.ajax({
                 url: '/uncg_math/decimal_conversion',
@@ -131,7 +145,8 @@
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("dec_to_word_answer").innerText = data2["result"];
+                    document.getElementById("decimal").value = data2["decimal"];
+                    document.getElementById("text").value = data2["text"];
                     return true;
                 },
                 error: function (data2) {
@@ -165,35 +180,18 @@
             });
 
     }
-<!--    function show_decimals(){-->
-<!--    dec_to_convert = document.getElementById("decimal").value;-->
+</script>
 
-<!--    dec_dict = {'operation':'show_decimals','decimal_to_convert':dec_to_convert}-->
 
-<!--     $.ajax({-->
-<!--                url: '/uncg_math/decimal_conversion',-->
-<!--                data: JSON.stringify(dec_dict),-->
-<!--                type: 'POST',-->
-<!--                contentType: "application/json",-->
-<!--                dataType: 'json',-->
-<!--                success: function (data2) {-->
-<!--                    document.getElementById("show_digits_answer").value = data2["result"];-->
-<!--                    return true;-->
-<!--                },-->
-<!--                error: function (data2) {-->
-<!--                    console.log(data2);-->
-<!--                    return false;-->
-<!--                }-->
-<!--            });-->
-
-<!--    }-->
-
-function show_decimals() {
+<script>
+    function show_decimals() {
     let dec_to_convert = document.getElementById("decimal").value;
+    let show_digit_num = document.getElementById("show_digit_input").value
     let dec_dict = {
         'operation': 'show_decimals',
         'decimal_to_convert': dec_to_convert,
-        'type':type
+        'show_digit_num': show_digit_num,
+        'type':'decimal'
     }
 
     $.ajax({
@@ -204,7 +202,7 @@ function show_decimals() {
         dataType: 'json',
         success: function (data2) {
             let formattedResult = formatResult(data2["result"]);
-            document.getElementById("show_digits_answer").innerText = formattedResult;
+            document.getElementById("show_digits_answer").innerText = data2["result"];
             return true;
         },
         error: function (data2) {
