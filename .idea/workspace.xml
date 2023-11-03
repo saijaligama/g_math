@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="version3.0 changed a lot">
-      <change afterPath="$PROJECT_DIR$/portal/templates/inequality_new.html" afterDir="false" />
+    <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="version3.8 changed a lot">
+      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/log_calculator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/exponentials.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/portal/templates/logarithms.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/scripts/utils/decimal_word_conversion_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/algebra.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/algebra.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/arithmetic_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/arithmetic_new.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/decimal_conversion.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/decimal_conversion.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/equations_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/equations_new.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/views.py" afterDir="false" />
     </list>
@@ -24,8 +22,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -257,7 +255,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697766746065</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="version3.8 changed a lot">
+      <created>1699013139702</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1699013139702</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -265,7 +270,8 @@
     <MESSAGE value="intilization" />
     <MESSAGE value="changed factors,decimal conversion, fraction conv, poly" />
     <MESSAGE value="version3.0 changed a lot" />
-    <option name="LAST_COMMIT_MESSAGE" value="version3.0 changed a lot" />
+    <MESSAGE value="version3.8 changed a lot" />
+    <option name="LAST_COMMIT_MESSAGE" value="version3.8 changed a lot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
