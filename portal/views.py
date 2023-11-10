@@ -23,7 +23,7 @@ from portal.scripts.utils.decimal_word_conversion_util import number_to_words, r
 
 from portal.scripts.utils.pattern_handler import identify_and_generate
 from portal.scripts.utils.equations_inequalities_handler import calculate_equation
-from portal.scripts.utils.log_calculator import  solve_log_equation
+from portal.scripts.utils.log_calculator import  calculate_log_from_expression
 bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./templates", static_folder="./static")
 
 
@@ -38,7 +38,7 @@ def logarithm():
         return render_template("logarithms.html")
     else:
         data = request.json
-        result = solve_log_equation(data['eqn'])
+        result = calculate_log_from_expression(data['eqn'],data['radioValue'])
         return jsonify({'result':result})
 
 @bp.route('/exponentials', methods = ['GET','POST'])
