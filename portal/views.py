@@ -45,6 +45,13 @@ def logarithm():
 def exponential():
     if request.method == 'GET':
         return render_template("exponentials.html")
+    else:
+        data = request.json
+        result = factor_handler(data['eqn'])
+        # if data['radioValue'] == 'integer':
+
+        return jsonify({'result': result})
+
 
 
 @bp.route('/inequalities_new', methods=['GET', 'POST'])
