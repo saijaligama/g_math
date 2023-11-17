@@ -5329,3 +5329,8 @@
 [2023-11-14 17:55:10,849][worker-0][INFO] Initialized Seeds
 [2023-11-14 17:55:10,850][worker-0][INFO] Initialized CORS
 [2023-11-14 17:55:10,850][worker-0][INFO] App Initialization is finished successfully
+[2023-11-16 21:55:33,318][worker-0][INFO] Initialized logger with level 10 for worker 0
+[2023-11-16 21:55:37,395][worker-0][INFO] Initialized application
+[2023-11-16 21:55:37,396][worker-0][INFO] Initialized Seeds
+[2023-11-16 21:55:37,397][worker-0][INFO] Initialized CORS
+[2023-11-16 21:55:37,398][worker-0][INFO] App Initialization is finished successfully
