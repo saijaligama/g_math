@@ -5,14 +5,19 @@ from portal.application.sequence import sequence_type, generat_arithmetic_sequen
 from portal.application.matrix_operations import matrix_arithmetic, matrix_arithmetic_operations, get_matrix, \
     get_ones_zeros_eye, get_transpose_inv_det, get_Diagonal_Trace_Size, get_inverse
 # from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+
 import numpy as np
+
 from portal.application.complex_numbers import evaluate_complex_expression
 from portal.application.equations_inequalities import evaluate_expression, find_variables, calculate_logarithm, \
     quad_equation_solution
 import cmath
 import random
+
 from decimal import Decimal
+
 # from PyPDF2 import PdfReader
+
 from fraction import Fraction
 import re
 
@@ -23,7 +28,8 @@ from portal.scripts.utils.decimal_word_conversion_util import number_to_words, r
 
 from portal.scripts.utils.pattern_handler import identify_and_generate
 from portal.scripts.utils.equations_inequalities_handler import calculate_equation
-from portal.scripts.utils.log_calculator import  calculate_log_from_expression
+from portal.scripts.utils.log_calculator import  calculate_log_from_expression,simplify_logarithmic_expression
+
 bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./templates", static_folder="./static")
 
 
@@ -38,8 +44,9 @@ def logarithm():
         return render_template("logarithms.html")
     else:
         data = request.json
+        # result = simplify_logarithmic_expression(data['eqn'],data['radioValue'])
         result = calculate_log_from_expression(data['eqn'],data['radioValue'])
-        return jsonify({'result':result})
+        return jsonify({'result': result})
 
 @bp.route('/exponentials', methods = ['GET','POST'])
 def exponential():
