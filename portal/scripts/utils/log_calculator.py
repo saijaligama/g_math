@@ -15,6 +15,7 @@ def simplify_logarithmic_expression(expression_str,radiovalue="dec"):
 
 def calculate_log_from_expression(log_expression, radiovalue="dec"):
     # Regular expression to find log expressions
+    log_expression = log_expression.replace("^", "**")
 
     if "a" in log_expression or "b" in log_expression:
         return simplify_logarithmic_expression(log_expression)
@@ -22,7 +23,8 @@ def calculate_log_from_expression(log_expression, radiovalue="dec"):
         log_expression = re.sub(r'ln\(([^)]+)\)', r'log(e,\1)', log_expression)
 
         # Split the input expression based on addition operator
-        terms = re.split(r'\s*\+\s*', log_expression)
+        # terms = re.split(r'\s*\+\s*', log_expression)
+        terms = re.split(r'\s*[-+]\s*', log_expression)
 
         # Regular expression to find log expressions
         pattern = r"log\(([^,]+)(?:,([^)]+))?\)"

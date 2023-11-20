@@ -29,6 +29,7 @@ from portal.scripts.utils.decimal_word_conversion_util import number_to_words, r
 from portal.scripts.utils.pattern_handler import identify_and_generate
 from portal.scripts.utils.equations_inequalities_handler import calculate_equation
 from portal.scripts.utils.log_calculator import  calculate_log_from_expression,simplify_logarithmic_expression
+from portal.scripts.utils.exponential_handler import exponential_expression_calculator
 
 bp = Blueprint('view', __name__, url_prefix='/uncg_math', template_folder="./templates", static_folder="./static")
 
@@ -54,11 +55,26 @@ def exponential():
         return render_template("exponentials.html")
     else:
         data = request.json
-        result = factor_handler(data['eqn'])
+        result = exponential_expression_calculator(data['eqn'],data['radioValue'])
         # if data['radioValue'] == 'integer':
 
         return jsonify({'result': result})
 
+
+# def exponential_handler(expression):
+#     try:
+#         expression = expression.replace("^", "**")
+#         # Parse the expression using sympy
+#         expr = sp.sympify(expression)
+#
+#         # Factor the expression
+#         factored_expr = sp.factor(expr)
+#
+#         simplified_expr = sp.simplify(factored_expr)
+#
+#         return str(simplified_expr)
+#     except sp.SympifyError:
+#         return "Invalid expression"
 
 
 @bp.route('/inequalities_new', methods=['GET', 'POST'])
@@ -195,6 +211,7 @@ import sympy as sp
 
 def factor_handler(expression):
     try:
+        expression = expression.replace("^", "**")
         # Parse the expression using sympy
         expr = sp.sympify(expression)
 
