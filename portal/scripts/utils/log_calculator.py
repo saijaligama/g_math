@@ -16,6 +16,7 @@ def simplify_logarithmic_expression(expression_str,radiovalue="dec"):
 def calculate_log_from_expression(log_expression, radiovalue="dec"):
     # Regular expression to find log expressions
     log_expression = log_expression.replace("^", "**")
+    log_expression = log_expression.replace("lg", "log")
 
     if "a" in log_expression or "b" in log_expression:
         return simplify_logarithmic_expression(log_expression)

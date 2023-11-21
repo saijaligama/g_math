@@ -6,15 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="updated exponentials">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logs/backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/equations_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/equations_new.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/exponentials.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/exponentials.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/factorization.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/factorization.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/inequality_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/inequality_new.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/logarithms.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/logarithms.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/polynomial.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/polynomial.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/rationals.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/rationals.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/scripts/utils/log_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/scripts/utils/log_calculator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700475058449</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="updated exponentials">
+      <created>1700549882565</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1700549882565</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
