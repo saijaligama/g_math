@@ -115,12 +115,20 @@ the content or design. Without your permission, your email
     <h2> <a id="Ar">Arithmetic </a> </h2>
     <FORM>
 <TABLE border=0 width=100% bgcolor=moccasin>
-    <tr>
-        <td>
-            <h3><a href="/uncg_math/arithmetic_new" style="width: 200px; height: 40px">Arithmetic Expressions</a></h3>
+    <TR>
+            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
+                <span>Function:</span><br>
+                <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <input type="radio" id="radioOption" value="integer"> Integer
+                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_polynomial()">
 
-        </td>
-    </tr>
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN=CENTER>Result :</TD>
+            <TD><span id="differentiation_result" style="font-size: small;">-------------------</span></TD>
+        </tr>
+
 
     <tr> <td> <br> </td> </tr>
     <tr><td COLSPAN=7 ALIGN=left > Please fill in the first two boxes and then click the operation,
@@ -888,5 +896,36 @@ document.forms[k].val7.factor = 0.00273791;
 
 </section>    
         </div>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+    <script>
+       function get_polynomial(){
+        var eqn = document.getElementById("differentiation_input").value
+        var radioValue = document.getElementById("radioOption").checked ? document.getElementById("radioOption").value : "dec";
+
+        data_dict = {'eqn':eqn,
+        'radioValue': radioValue}
+        $.ajax({
+                url: '/uncg_math/arithmetic_new',
+                data: JSON.stringify(data_dict),
+                type: 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data2) {
+                    document.getElementById("differentiation_result").innerText = data2['result'];
+                   return true;
+                },
+                error: function (data2) {
+                    console.log(data2);
+                    return false;
+                }
+            });
+
+
+    }
+
+    </script>
     </body>
 </html>

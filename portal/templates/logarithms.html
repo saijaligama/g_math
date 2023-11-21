@@ -36,7 +36,7 @@
 
             <ul style="margin-top: -20px;">
                 <li style="padding-left: 179px;"><a href="/uncg_math">Home</a></li>
-                <li style="padding-left: 179px;"><a href="/uncg_math/#Ar">Back</a></li>
+                <li style="padding-left: 179px;"><a href="/uncg_math/algebra">Back</a></li>
 
             </ul>
 <!--            <ul>-->
@@ -56,7 +56,7 @@
             <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
                 <span>Function:</span><br>
                 <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
-                <input type="radio" id="radioOption" value="integer"> Integer
+                <input type="checkbox" id="checkboxOption" value="integer"> Integer
                 <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_polynomial()">
 
             </TD>
@@ -81,10 +81,20 @@
     <script>
        function get_polynomial(){
         var eqn = document.getElementById("differentiation_input").value
-        var radioValue = document.getElementById("radioOption").checked ? document.getElementById("radioOption").value : "dec";
+        var checkboxElement = document.getElementById("checkboxOption");
 
+// Check if the checkbox is checked
+if (checkboxElement.checked) {
+    // If checked, get the value
+    var checkboxValue = "integer";
+    console.log("Selected value:", checkboxValue);
+} else {
+    // If not checked, set a default value (e.g., "dec")
+    var checkboxValue = "dec";
+    console.log("Default value:", checkboxValue);
+}
         data_dict = {'eqn':eqn,
-        'radioValue': radioValue}
+        'radioValue': checkboxValue}
         $.ajax({
                 url: '/uncg_math/logarithms',
                 data: JSON.stringify(data_dict),
