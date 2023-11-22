@@ -237,6 +237,17 @@ def convert_to_mixed_fraction(decimal):
     return f"{whole_number} {fractional_part.numerator}/{fraction.denominator}"
 
 
+
+def evaluate_custom_functions(expression):
+    # Evaluate pow, floor, ceil, and abs functions
+    expression = expression.replace('pow', 'math.pow')
+    expression = expression.replace('floor', 'math.floor')
+    expression = expression.replace('ceil', 'math.ceil')
+    expression = expression.replace('abs', 'abs')
+    return eval(expression)
+
+
+
 @bp.route('/arithmetic_new', methods=["GET", "POST"])
 def arithmetic_new():
     if request.method == "GET":
@@ -244,7 +255,8 @@ def arithmetic_new():
     if request.method == "POST":
         data = request.json
         # result = eval(data['eqn'])
-        result = sy.compute(data['eqn'])
+        result = evaluate_custom_functions(data['eqn'])
+        # result = sy.compute(modified_expression)
         if data['radioValue'] == "integer":
             result = convert_to_mixed_fraction(result)
         return jsonify({'result': result})

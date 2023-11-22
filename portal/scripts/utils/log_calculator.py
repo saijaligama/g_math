@@ -13,6 +13,28 @@ def simplify_logarithmic_expression(expression_str,radiovalue="dec"):
 
     return str(combined_expression)
 
+# def simplify_logarithmic_expression(expression_str, radiovalue="dec"):
+#     # Parse the input string into a symbolic expression
+#     expression = sp.sympify(expression_str)
+#
+#     # Check if the expression is a power of a logarithm
+#     if isinstance(expression, sp.log):
+#         base, argument = expression.as_coefficients_dict().popitem()
+#         return f"{argument} * log({base})"
+#
+#     # Separate log terms
+#     separated_expression = sp.expand_log(expression, force=True)
+#
+#     # Check if the expression is a power of a logarithm after expansion
+#     if isinstance(separated_expression, sp.log):
+#         base, argument = separated_expression.as_coefficients_dict().popitem()
+#         return f"{argument} * log({base})"
+#
+#     # Combine log terms at the end
+#     combined_expression = sp.logcombine(separated_expression, force=True)
+#
+#     return str(combined_expression)
+
 def calculate_log_from_expression(log_expression, radiovalue="dec"):
     # Regular expression to find log expressions
     log_expression = log_expression.replace("^", "**")
