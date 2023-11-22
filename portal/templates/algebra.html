@@ -168,6 +168,92 @@
         
 </div>
 
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<script>
+function get_polynomial() {
+    eqn = document.getElementById("differentiation_input").value
+
+    data_dict = { 'eqn': eqn }
+    $.ajax({
+        url: '/uncg_math/polynomials',
+        data: JSON.stringify(data_dict),
+        type: 'POST',
+        contentType: "application/json",
+        dataType: 'json',
+        success: function (data2) {
+            var result = data2['result'];
+            var resultDiv = document.getElementById("differentiation_result");
+
+            // Clear any existing content
+            resultDiv.innerHTML = "";
+
+            // Loop through the result object and display each step
+            for (var key in result) {
+                if (result.hasOwnProperty(key)) {
+                    var step = result[key];
+                    var stepDiv = document.createElement("div");
+                    stepDiv.innerText = step;
+                    resultDiv.appendChild(stepDiv);
+                }
+            }
+
+            return true;
+        },
+        error: function (data2) {
+            console.log(data2);
+            return false;
+        }
+    });
+}
+</script>
+<script>
+function convert_fraction(){
+            frac = document.getElementById("fraction").value;
+            frac_dict = {'eqn' : frac}
+
+            $.ajax({
+                url: '/uncg_math/equations_new',
+                data: JSON.stringify(frac_dict),
+                type: 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data2) {
+                    document.getElementById("fraction_answer").innerText = data2["result"];
+                    return true;
+                },
+                error: function (data2) {
+                    console.log(data2);
+                    return false;
+                }
+            });
+
+        }
+
+        function convert_inequality(){
+            frac = document.getElementById("inequality").value;
+            frac_dict = {'eqn' : frac}
+
+            $.ajax({
+                url: '/uncg_math/equations_new',
+                data: JSON.stringify(frac_dict),
+                type: 'POST',
+                contentType: "application/json",
+                dataType: 'json',
+                success: function (data2) {
+                    document.getElementById("inequality_answer").innerText = data2["result"];
+                    return true;
+                },
+                error: function (data2) {
+                    console.log(data2);
+                    return false;
+                }
+            });
+
+        }
+
+    </script>
 
 
 </body>
