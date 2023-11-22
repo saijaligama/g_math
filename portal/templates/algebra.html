@@ -99,6 +99,77 @@
 
             </ul>
         </div>
+        <h2>Polynomials</h2>
+        <FORM>
+            <TABLE border=0 width=100% bgcolor=moccasin>
+                <tr>
+                    <td>
+                        <span>Input Format: function, variable example</span>
+                    </td>
+                </tr>
+        <tr>
+            <td> <br> </td>
+        </tr>
+
+        <TR>
+            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
+                <span>Function:</span><br>
+                <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_polynomial()">
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN=CENTER>Result :</TD>
+            <TD><span id="differentiation_result" style="font-size: small;">-------------------</span></TD>
+        </tr>
+    </TABLE>
+</FORM>
+
+
+        <h2> <a id="Get_Arithmetic_Geometric"> Equations</a></h2>
+
+
+        <FORM>
+            <TABLE border=0 width=100% bgcolor=moccasin>
+                <tr>
+                    <td> <br> </td>
+                </tr>
+
+
+                <TR>
+                    <TD ALIGN=CENTER>Enter Equation</TD>
+                    <TD ALIGN=CENTER>Result</TD>
+
+                </TR>
+                <TR ALIGN=CENTER>
+                    <TD><INPUT CLASS="widebutton" TYPE=TEXT NAME=a1_inputval12 ID=fraction data-my-input style="padding: 12px;width: 250px;"></TD>
+<!--                    <td><INPUT TYPE=TEXT ID="fraction_answer"> </td>-->
+                    <TD><span id="fraction_answer" >-------------------</span></TD>
+
+<!--                   <INPUT TYPE=TEXT NAME=arith_or_geo_input ID=arith_for_geo_input "></td>-->
+
+                </TR>
+                <TR>
+                    <TD ALIGN=CENTER>
+                        <INPUT TYPE="button" class="widebutton" value="Calculate" onclick="convert_fraction()">
+                    </TD>
+                </tr>
+
+
+
+                <tr>
+                    <td> <br> </td>
+                </tr>
+
+
+
+            </TABLE>
+        </FORM>
         
 </div>
+
+
+
 </body>
+
+</html>
