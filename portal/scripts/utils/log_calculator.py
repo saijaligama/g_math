@@ -8,10 +8,14 @@ def simplify_logarithmic_expression(expression_str,radiovalue="dec"):
     # Separate log terms
     separated_expression = sp.expand_log(expression, force=True)
 
-    # Combine log terms at the end
-    combined_expression = sp.logcombine(separated_expression, force=True)
+    if radiovalue=="integer":
 
-    return str(combined_expression)
+    # Combine log terms at the end
+        combined_expression = sp.logcombine(separated_expression, force=True)
+
+        return str(combined_expression)
+    else:
+        return str(separated_expression)
 
 # def simplify_logarithmic_expression(expression_str, radiovalue="dec"):
 #     # Parse the input string into a symbolic expression
@@ -41,7 +45,7 @@ def calculate_log_from_expression(log_expression, radiovalue="dec"):
     log_expression = log_expression.replace("lg", "log")
 
     if "a" in log_expression or "b" in log_expression:
-        return simplify_logarithmic_expression(log_expression)
+        return simplify_logarithmic_expression(log_expression,radiovalue)
     else:
         log_expression = re.sub(r'ln\(([^)]+)\)', r'log(e,\1)', log_expression)
 

@@ -55,15 +55,15 @@
         <TR>
             <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
                 <span>Sequence:</span><br>
-                <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <INPUT TYPE=TEXT NAME="limit_input" ID="pattern_input" style="padding: 12px;width: 250px;">
                 <span>n</span>
-                <INPUT TYPE=TEXT NAME="limit_point" ID="differentiation_point" style="padding: 12px;width: 10px;">
+                <INPUT TYPE=TEXT NAME="limit_point" ID="pattern_point" style="padding: 12px;width: 10px;">
                 <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_pattern()">
             </TD>
         </TR>
         <tr>
             <TD ALIGN=CENTER>Result :</TD>
-            <TD><span id="differentiation_result" style="font-size: small;">-------------------</span></TD>
+            <TD><span id="pattern_result" style="font-size: small;">-------------------</span></TD>
         </tr>
     </TABLE>
 </FORM>
@@ -74,8 +74,8 @@
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script>
       function get_pattern(){
-        eqn = document.getElementById("differentiation_input").value
-        n = document.getElementById("differentiation_point").value
+        eqn = document.getElementById("pattern_input").value
+        n = document.getElementById("pattern_point").value
         data_dict = {'eqn':eqn,'n':n}
         $.ajax({
                 url: '/uncg_math/patterns',
@@ -84,7 +84,7 @@
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("differentiation_result").innerText = data2['result'];
+                    document.getElementById("pattern_result").innerText = data2['result'];
                    return true;
                 },
                 error: function (data2) {

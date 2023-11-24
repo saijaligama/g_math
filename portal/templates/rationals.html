@@ -55,13 +55,13 @@
         <TR>
             <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
                 <span>Function:</span><br>
-                <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <INPUT TYPE=TEXT NAME="limit_input" ID="rational_input" style="padding: 12px;width: 250px;">
                 <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_rational()">
             </TD>
         </TR>
         <tr>
             <TD ALIGN=CENTER>Result :</TD>
-            <TD><span id="differentiation_result" style="font-size: small;">-------------------</span></TD>
+            <TD><span id="rational_result" style="font-size: small;">-------------------</span></TD>
         </tr>
     </TABLE>
 </FORM>
@@ -74,7 +74,7 @@
 
     <script>
        function get_rational(){
-        eqn = document.getElementById("differentiation_input").value
+        eqn = document.getElementById("rational_input").value
 
         data_dict = {'eqn':eqn}
         $.ajax({
@@ -84,7 +84,7 @@
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("differentiation_result").innerText = data2['result'];
+                    document.getElementById("rational_result").innerText = data2['result'];
                    return true;
                 },
                 error: function (data2) {

@@ -55,17 +55,17 @@
         <TR>
             <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
                 <span>Function:</span><br>
-                <INPUT TYPE=TEXT NAME="limit_input" ID="differentiation_input" style="padding: 12px;width: 250px;">
+                <INPUT TYPE=TEXT NAME="limit_input" ID="exponential_input" style="padding: 12px;width: 250px;">
 <!--                <input type="radio" id="radioOption" value="integer"> Integer-->
-                <input type="checkbox" id="checkboxOption" value="integer"> Integer
+                <input type="checkbox" id="checkboxOption_exp" value="integer"> Integer
 
-                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_polynomial()">
+                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_exponential()">
 
             </TD>
         </TR>
         <tr>
             <TD ALIGN=CENTER>Result :</TD>
-            <TD><span id="differentiation_result" style="font-size: small;">-------------------</span></TD>
+            <TD><span id="exponential_result" style="font-size: small;">-------------------</span></TD>
         </tr>
     </TABLE>
 </FORM>
@@ -77,11 +77,11 @@
     <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
     <script>
-       function get_polynomial(){
-        var eqn = document.getElementById("differentiation_input").value
+       function get_exponential(){
+        var eqn = document.getElementById("exponential_input").value
 
         // Get the checkbox element
-var checkboxElement = document.getElementById("checkboxOption");
+var checkboxElement = document.getElementById("checkboxOption_exp");
 
 // Check if the checkbox is checked
 if (checkboxElement.checked) {
@@ -104,7 +104,7 @@ if (checkboxElement.checked) {
                 contentType: "application/json",
                 dataType: 'json',
                 success: function (data2) {
-                    document.getElementById("differentiation_result").innerText = data2['result'];
+                    document.getElementById("exponential_result").innerText = data2['result'];
                    return true;
                 },
                 error: function (data2) {
