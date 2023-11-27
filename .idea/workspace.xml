@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="updated home and others">
+    <list default="true" id="f75d9459-127e-4a8d-a84f-8b940e810384" name="Changes" comment="updated algebra">
+      <change afterPath="$PROJECT_DIR$/portal/scripts/utils/temp_pattern_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/backend.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/backend.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/scripts/utils/log_calculator.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/scripts/utils/log_calculator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/portal/scripts/utils/pattern_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/portal/scripts/utils/pattern_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/portal/templates/algebra.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/algebra.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/exponentials.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/exponentials.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/inequality_new.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/inequality_new.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/logarithms.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/logarithms.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/patterns.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/patterns.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/portal/templates/rationals.html" beforeDir="false" afterPath="$PROJECT_DIR$/portal/templates/rationals.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -340,7 +336,14 @@
       <option name="project" value="LOCAL" />
       <updated>1700662771395</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="updated algebra">
+      <created>1700814812603</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1700814812603</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -357,7 +360,8 @@
     <MESSAGE value="updated exponentials" />
     <MESSAGE value="updated logs" />
     <MESSAGE value="updated home and others" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated home and others" />
+    <MESSAGE value="updated algebra" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated algebra" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

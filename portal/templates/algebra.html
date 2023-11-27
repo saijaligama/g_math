@@ -300,6 +300,52 @@
     </TABLE>
 </FORM>
 
+                     <h2>Exponentials</h2>
+        <FORM>
+            <TABLE border=0 width=100% bgcolor=moccasin>
+        <tr>
+            <td> <br> </td>
+        </tr>
+        <TR>
+            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
+                <span>Function:</span><br>
+                <INPUT TYPE=TEXT NAME="limit_input" ID="exponential_input" style="padding: 12px;width: 250px;">
+<!--                <input type="radio" id="radioOption" value="integer"> Integer-->
+                <input type="checkbox" id="checkboxOption_exp" value="integer"> Integer
+
+                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_exponential()">
+
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN=CENTER>Result :</TD>
+            <TD><span id="exponential_result" style="font-size: small;">-------------------</span></TD>
+        </tr>
+    </TABLE>
+</FORM>
+
+        <h2>Patterns</h2>
+        <FORM>
+            <TABLE border=0 width=100% bgcolor=moccasin>
+        <tr>
+            <td> <br> </td>
+        </tr>
+        <TR>
+            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
+                <span>Sequence:</span><br>
+                <INPUT TYPE=TEXT NAME="limit_input" ID="pattern_input" style="padding: 12px;width: 250px;">
+                <span>n</span>
+                <INPUT TYPE=TEXT NAME="limit_point" ID="pattern_point" style="padding: 12px;width: 10px;">
+                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_pattern()">
+            </TD>
+        </TR>
+        <tr>
+            <TD ALIGN=CENTER>Result :</TD>
+            <TD><span id="pattern_result" style="font-size: small;">-------------------</span></TD>
+        </tr>
+    </TABLE>
+</FORM>
+
          <h2> <a id="Arithmetic_Or_Geometric_Sequence">Arithmetic Or Geometric Sequence. </a></h2>
 
 
@@ -434,51 +480,7 @@
             </TABLE>
         </FORM>
 
-             <h2>Exponentials</h2>
-        <FORM>
-            <TABLE border=0 width=100% bgcolor=moccasin>
-        <tr>
-            <td> <br> </td>
-        </tr>
-        <TR>
-            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
-                <span>Function:</span><br>
-                <INPUT TYPE=TEXT NAME="limit_input" ID="exponential_input" style="padding: 12px;width: 250px;">
-<!--                <input type="radio" id="radioOption" value="integer"> Integer-->
-                <input type="checkbox" id="checkboxOption_exp" value="integer"> Integer
 
-                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_exponential()">
-
-            </TD>
-        </TR>
-        <tr>
-            <TD ALIGN=CENTER>Result :</TD>
-            <TD><span id="exponential_result" style="font-size: small;">-------------------</span></TD>
-        </tr>
-    </TABLE>
-</FORM>
-
-        <h2>Patterns</h2>
-        <FORM>
-            <TABLE border=0 width=100% bgcolor=moccasin>
-        <tr>
-            <td> <br> </td>
-        </tr>
-        <TR>
-            <TD COLSPAN=7 ALIGN=LEFT VALIGN=MIDDLE>
-                <span>Sequence:</span><br>
-                <INPUT TYPE=TEXT NAME="limit_input" ID="pattern_input" style="padding: 12px;width: 250px;">
-                <span>n</span>
-                <INPUT TYPE=TEXT NAME="limit_point" ID="pattern_point" style="padding: 12px;width: 10px;">
-                <INPUT TYPE="button" class="widebutton" VALUE="Calculate" onclick="get_pattern()">
-            </TD>
-        </TR>
-        <tr>
-            <TD ALIGN=CENTER>Result :</TD>
-            <TD><span id="pattern_result" style="font-size: small;">-------------------</span></TD>
-        </tr>
-    </TABLE>
-</FORM>
 
  <h2> <a id="ASMD">Matrix Operations</a></h2>
 

@@ -47,11 +47,8 @@ def identify_integer_exponents(sequence,n):
                     exponent = candidate_exponent
                     flag = True
                     logic_message = f"The sequence follows the pattern of integer exponents with exponent {exponent}."
-                    results = [str(i ** candidate_exponent) for i in range(len(sequence), len(sequence)+n+2)]
-                    results.pop(0)
-                    results.pop(0)
-                    return flag, logic_message,results
-                    # print(results)
+                    results = [str(i ** candidate_exponent) for i in range(len(sequence), len(sequence)+n)]
+                    print(results)
                 elif exponent != candidate_exponent:
                     flag = False
                     logic_message = "The sequence does not follow the pattern of integer exponents."
